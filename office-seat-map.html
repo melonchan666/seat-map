@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>公司员工座位图</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0f1419; color: #e7e9ea; min-height: 100vh; }
+.header { background: linear-gradient(135deg, #1d9bf0 0%, #0c7ac5 100%); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
+.header h1 { font-size: 22px; font-weight: 700; }
+.header .stats { display: flex; gap: 24px; font-size: 14px; }
+.header .stats span { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
+.header .data-badge { font-size: 12px; background: rgba(0,186,124,0.2); color: #00ba7c; padding: 4px 12px; border-radius: 12px; font-weight: 500; }
+.tabs { display: flex; background: #1a1f26; border-bottom: 1px solid #2f3336; padding: 0 32px; overflow-x: auto; }
+.tab { padding: 14px 20px; font-size: 14px; font-weight: 500; color: #71767b; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+.tab:hover { color: #e7e9ea; background: rgba(255,255,255,0.03); }
+.tab.active { color: #1d9bf0; border-bottom-color: #1d9bf0; }
+.floor { padding: 32px; }
+.floor-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #e7e9ea; display: flex; align-items: center; gap: 12px; }
+.floor-title .dept-tag { font-size: 12px; background: #1d9bf0; color: #fff; padding: 4px 12px; border-radius: 12px; font-weight: 400; }
+.office-map { display: grid; gap: 10px; margin-top: 16px; }
+.layout-tech { grid-template-columns: repeat(7, 1fr); }
+.layout-product { grid-template-columns: repeat(5, 1fr); }
+.layout-market { grid-template-columns: repeat(6, 1fr); }
+.layout-ops { grid-template-columns: repeat(4, 1fr); }
+.layout-finance { grid-template-columns: repeat(3, 1fr); }
+.seat { background: #1a1f26; border: 1px solid #2f3336; border-radius: 12px; padding: 16px 12px; cursor: pointer; transition: all 0.2s; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.seat:hover { border-color: #1d9bf0; background: #1c2530; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(29,155,240,0.12); }
+.seat.empty { background: #14181d; border-style: dashed; border-color: #2a2e33; cursor: default; }
+.seat.empty:hover { transform: none; box-shadow: none; border-color: #2a2e33; }
+.seat.feishu { border-color: #00ba7c; background: rgba(0,186,124,0.06); }
+.seat .name { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e7e9ea; }
+.seat .role { font-size: 11px; color: #71767b; margin-bottom: 8px; }
+.seat .status { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 500; }
+.seat .feishu-tag { font-size: 10px; color: #00ba7c; margin-top: 4px; }
+.status-on { background: rgba(0,186,124,0.15); color: #00ba7c; }
+.status-off { background: rgba(255,138,0,0.15); color: #ff8a00; }
+.status-leave { background: rgba(244,33,46,0.15); color: #f4212e; }
+.status-remote { background: rgba(140,82,255,0.15); color: #8c52ff; }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.65); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: #1a1f26; border: 1px solid #2f3336; border-radius: 20px; padding: 28px; width: 440px; max-height: 80vh; overflow-y: auto; position: relative; animation: modalIn 0.2s ease; }
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal .close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: #2f3336; border: none; color: #e7e9ea; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal .close:hover { background: #3e4146; }
+.modal h3 { font-size: 20px; margin-bottom: 4px; }
+.modal .role-tag { font-size: 13px; color: #71767b; margin-bottom: 16px; }
+.modal .section { margin-top: 18px; }
+.modal .section-title { font-size: 12px; text-transform: uppercase; color: #71767b; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600; }
+.modal .asset-table { width: 100%; border-collapse: collapse; }
+.modal .asset-table td { padding: 8px 0; font-size: 13px; border-bottom: 1px solid #2a2e33; }
+.modal .asset-table td:last-child { text-align: right; color: #71767b; }
+.modal .contact-card { background: #14181d; border-radius: 12px; padding: 14px; margin-top: 4px; }
+.modal .contact-card .c-name { font-size: 14px; font-weight: 600; color: #1d9bf0; }
+.modal .contact-card .c-info { font-size: 12px; color: #71767b; margin-top: 4px; }
+.modal .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.legend { padding: 16px 32px; display: flex; gap: 20px; flex-wrap: wrap; border-top: 1px solid #2f3336; margin: 0 32px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #71767b; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.legend-dot.on { background: #00ba7c; }
+.legend-dot.off { background: #f4212e; }
+.legend-dot.leave { background: #ff8a00; }
+.legend-dot.remote { background: #8c52ff; }
+.legend-dot.empty { background: #2a2e33; border: 1px dashed #3e4146; }
+.legend-dot.feishu { background: #00ba7c; border: 2px solid #00ba7c; }
+.footer { text-align: center; padding: 24px; color: #3e4146; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>办公座位图 <span class="data-badge" id="dataSource">演示数据</span></h1>
+  <div class="stats">
+    <span>在岗 <b style="color:#00ba7c" id="statOn">-</b></span>
+    <span>休假 <b style="color:#f4212e" id="statOff">-</b></span>
+    <span>外出 <b style="color:#ff8a00" id="statLeave">-</b></span>
+    <span>远程 <b style="color:#8c52ff" id="statRemote">-</b></span>
+  </div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+<div class="floor" id="floorContent"></div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot on"></div> 在岗</div>
+  <div class="legend-item"><div class="legend-dot off"></div> 病假/事假</div>
+  <div class="legend-item"><div class="legend-dot leave"></div> 外出/出差</div>
+  <div class="legend-item"><div class="legend-dot remote"></div> 远程办公</div>
+  <div class="legend-item"><div class="legend-dot empty"></div> 空位</div>
+  <div class="legend-item"><div class="legend-dot feishu"></div> 飞书同步</div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="footer">员工座位图系统 v2.0 · 对接飞书通讯录 · 可嵌入飞书网页应用</div>
+
+<script>
+// ===== 飞书真实数据（内嵌） =====
+const __FEISHU_DATA__ = {"update_time":"2026-06-13 18:56:57","total":11,"users":[{"name":"陈智威","department":"运营管理部","status":"remote","status_label":"远程办公","user_id":"3691cg5a","is_feishu":true,"assets":{"部门":"运营管理部","工位号":"006688","资产":["笔记本电脑","显示器"],"替补联系人":"1212331"},"contact":{"name":"1212331","role":"部门同事","note":"陈智威当前远程办公，工作事宜请联系替补联系人"}},{"name":"沈月","department":"运营管理部","status":"off","status_label":"病假事假","user_id":"","is_feishu":false,"assets":{"部门":"运营管理部","工位号":"006689","资产":["台式主机","显示器"],"替补联系人":"12212"},"contact":{"name":"12212","role":"部门同事","note":"沈月当前病假事假，工作事宜请联系替补联系人"}},{"name":"吴琼","department":"市场部","status":"off","status_label":"年假","user_id":"","is_feishu":false,"assets":{"部门":"市场部","工位号":"006690","资产":["手机"]}},{"name":"张一","department":"市场部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"市场部","工位号":"006691","资产":["电话机"]}},{"name":"张三","department":"财务部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"财务部","工位号":"006692","资产":["笔记本电脑","台式主机","显示器"]}},{"name":"李四","department":"财务部","status":"off","status_label":"病假事假","user_id":"","is_feishu":false,"assets":{"部门":"财务部","工位号":"006693","资产":["显示器","笔记本电脑"]}},{"name":"王五","department":"技术研发部","status":"off","status_label":"年假","user_id":"","is_feishu":false,"assets":{"部门":"技术研发部","工位号":"006694","资产":["手机","笔记本电脑"]}},{"name":"陈六","department":"技术研发部","status":"remote","status_label":"远程办公","user_id":"","is_feishu":false,"assets":{"部门":"技术研发部","工位号":"006695","资产":["笔记本电脑"]}},{"name":"覃七","department":"产品设计部","status":"remote","status_label":"远程办公","user_id":"","is_feishu":false,"assets":{"部门":"产品设计部","工位号":"006696","资产":["台式主机","笔记本电脑"]}},{"name":"朱八","department":"产品设计部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"产品设计部","工位号":"006697","资产":["手机"]}},{"name":"黄九","department":"产品设计部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"产品设计部","工位号":"006698","资产":["电话机","显示器"]}}]};
+
+const statusLabels = { on: '在岗', off: '病假/事假', leave: '外出/出差', remote: '远程办公', empty: '空位' };
+const statusCss = { on: 'status-on', off: 'status-off', leave: 'status-leave', remote: 'status-remote' };
+
+// 5个部门的列数布局
+const deptLayouts = {
+  '技术研发部': 'layout-tech',
+  '产品设计部': 'layout-product',
+  '市场部': 'layout-market',
+  '运营管理部': 'layout-ops',
+  '财务部': 'layout-finance'
+};
+
+const deptOrder = ['技术研发部', '产品设计部', '市场部', '运营管理部', '财务部'];
+
+// ===== 用真实数据构各部门 =====
+function buildDepartments() {
+  const data = __FEISHU_DATA__;
+  const deptMap = {};
+  for (const u of data.users) {
+    const d = u.department || '未分配';
+    if (!deptMap[d]) deptMap[d] = [];
+    deptMap[d].push({
+      name: u.name,
+      role: u.department || '飞书用户',
+      status: u.status || 'on',
+      status_label: u.status_label || statusLabels[u.status] || '',
+      assets: u.assets || {},
+      contact: u.contact || null,
+      isFeishu: !!u.is_feishu
+    });
+  }
+
+  const depts = [];
+  for (const dn of deptOrder) {
+    const members = deptMap[dn] || [];
+    // 补充2个空位让布局好看些
+    for (let i = 0; i < 2; i++) {
+      members.push({ name: null, role: null, status: 'empty', assets: {}, isFeishu: false });
+    }
+    depts.push({
+      id: dn,
+      name: dn,
+      headcount: members.filter(m => m.status !== 'empty').length,
+      members: members,
+      layoutClass: deptLayouts[dn] || 'layout-tech'
+    });
+  }
+  return depts;
+}
+
+let departments = buildDepartments();
+
+function init() {
+  const badge = document.getElementById('dataSource');
+  badge.textContent = `飞书同步 (${__FEISHU_DATA__.total}人)`;
+  badge.style.background = 'rgba(0,186,124,0.2)';
+  badge.style.color = '#00ba7c';
+
+  const tabs = document.getElementById('tabs');
+  departments.forEach((dept, i) => {
+    const tab = document.createElement('div');
+    tab.className = 'tab' + (i === 0 ? ' active' : '');
+    tab.textContent = dept.name + ' (' + dept.headcount + '人)';
+    tab.onclick = () => switchDept(i);
+    tabs.appendChild(tab);
+  });
+  switchDept(0);
+}
+
+function switchDept(i) {
+  document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === i));
+  renderDept(departments[i]);
+  updateStats();
+}
+
+function renderDept(dept) {
+  const fc = document.getElementById('floorContent');
+  fc.innerHTML = `
+    <div class="floor-title">${dept.name} 办公室 <span class="dept-tag">${dept.headcount}人</span></div>
+    <div class="office-map ${dept.layoutClass}" id="map"></div>
+  `;
+  const map = document.getElementById('map');
+  dept.members.forEach((m) => {
+    const seat = document.createElement('div');
+    let cls = 'seat';
+    if (m.status === 'empty') cls += ' empty';
+    if (m.isFeishu) cls += ' feishu';
+    seat.className = cls;
+
+    if (m.status === 'empty') {
+      seat.innerHTML = '<div style="color:#3e4146;font-size:13px;">空位</div>';
+    } else {
+      const sc = statusCss[m.status] || '';
+      const label = m.status_label || statusLabels[m.status] || '';
+      seat.innerHTML = `
+        <div class="name">${m.name}</div>
+        <div class="role">${m.role}</div>
+        <div class="status ${sc}">${label}</div>
+        ${m.isFeishu ? '<div class="feishu-tag">飞书同步</div>' : ''}
+      `;
+      seat.onclick = () => showDetail(m);
+    }
+    map.appendChild(seat);
+  });
+}
+
+function showDetail(member) {
+  const m = document.getElementById('modal');
+  let assetsHtml = '';
+  for (const [k, v] of Object.entries(member.assets || {})) {
+    if (k === '替补联系人') continue;
+    const val = Array.isArray(v) ? v.join('、') : v;
+    if (!val) continue;
+    assetsHtml += `<tr><td>${k}</td><td>${val}</td></tr>`;
+  }
+  let contactHtml = '';
+  if (member.contact) {
+    contactHtml = `
+      <div class="contact-card">
+        <div class="c-name">${member.contact.name} · ${member.contact.role || ''}</div>
+        <div class="c-info">${member.contact.note}</div>
+      </div>
+    `;
+  }
+  const sc = statusCss[member.status] || '';
+  const label = member.status_label || statusLabels[member.status] || '';
+  const seatNum = (member.assets || {})['工位号'] || '';
+  m.innerHTML = `
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>${member.name}</h3>
+    <div class="role-tag">${member.role}${member.isFeishu ? ' · 飞书同步' : ''} · ${seatNum}</div>
+    <div class="status-badge ${sc}">${label}</div>
+    ${member.status !== 'on' && member.contact ? '<div class="section"><div class="section-title">工作对接人</div>' + contactHtml + '</div>' : ''}
+    <div class="section">
+      <div class="section-title">${member.isFeishu ? '飞书信息' : '公司资产'}</div>
+      <table class="asset-table">${assetsHtml}</table>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+function updateStats() {
+  let on = 0, off = 0, leave = 0, remote = 0;
+  departments.forEach(d => d.members.forEach(m => {
+    if (m.status === 'on') on++;
+    else if (m.status === 'off') off++;
+    else if (m.status === 'leave') leave++;
+    else if (m.status === 'remote') remote++;
+  }));
+  document.getElementById('statOn').textContent = on;
+  document.getElementById('statOff').textContent = off;
+  document.getElementById('statLeave').textContent = leave;
+  document.getElementById('statRemote').textContent = remote;
+}
+
+init();
+</script>
+</body>
+</html>
