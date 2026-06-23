@@ -1,243 +1,601 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>公司员工座位图</title>
+<title>å·¥ä½å®¤ Â· åå·¥å·¥ä½å¾</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0f1419; color: #e7e9ea; min-height: 100vh; }
-.header { background: linear-gradient(135deg, #1d9bf0 0%, #0c7ac5 100%); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
-.header h1 { font-size: 22px; font-weight: 700; }
-.header .stats { display: flex; gap: 24px; font-size: 14px; }
-.header .stats span { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
-.header .data-badge { font-size: 12px; background: rgba(0,186,124,0.2); color: #00ba7c; padding: 4px 12px; border-radius: 12px; font-weight: 500; }
-.tabs { display: flex; background: #1a1f26; border-bottom: 1px solid #2f3336; padding: 0 32px; overflow-x: auto; }
-.tab { padding: 14px 20px; font-size: 14px; font-weight: 500; color: #71767b; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
-.tab:hover { color: #e7e9ea; background: rgba(255,255,255,0.03); }
-.tab.active { color: #1d9bf0; border-bottom-color: #1d9bf0; }
-.floor { padding: 32px; }
-.floor-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #e7e9ea; display: flex; align-items: center; gap: 12px; }
-.floor-title .dept-tag { font-size: 12px; background: #1d9bf0; color: #fff; padding: 4px 12px; border-radius: 12px; font-weight: 400; }
-.office-map { display: grid; gap: 10px; margin-top: 16px; }
-.layout-tech { grid-template-columns: repeat(7, 1fr); }
-.layout-product { grid-template-columns: repeat(5, 1fr); }
-.layout-market { grid-template-columns: repeat(6, 1fr); }
-.layout-ops { grid-template-columns: repeat(4, 1fr); }
-.layout-finance { grid-template-columns: repeat(3, 1fr); }
-.seat { background: #1a1f26; border: 1px solid #2f3336; border-radius: 12px; padding: 16px 12px; cursor: pointer; transition: all 0.2s; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.seat:hover { border-color: #1d9bf0; background: #1c2530; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(29,155,240,0.12); }
-.seat.empty { background: #14181d; border-style: dashed; border-color: #2a2e33; cursor: default; }
-.seat.empty:hover { transform: none; box-shadow: none; border-color: #2a2e33; }
-.seat.feishu { border-color: #00ba7c; background: rgba(0,186,124,0.06); }
-.seat .name { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e7e9ea; }
-.seat .role { font-size: 11px; color: #71767b; margin-bottom: 8px; }
-.seat .status { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 500; }
-.seat .feishu-tag { font-size: 10px; color: #00ba7c; margin-top: 4px; }
-.status-on { background: rgba(0,186,124,0.15); color: #00ba7c; }
-.status-off { background: rgba(255,138,0,0.15); color: #ff8a00; }
-.status-leave { background: rgba(244,33,46,0.15); color: #f4212e; }
-.status-remote { background: rgba(140,82,255,0.15); color: #8c52ff; }
-.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.65); z-index: 100; align-items: center; justify-content: center; }
+:root {
+  --bg: #1a1c22;
+  --surface: #22262e;
+  --surface-hover: #2a2f38;
+  --border: #323640;
+  --text: #e4e6ea;
+  --text-dim: #8b8f98;
+  --text-muted: #5a5e66;
+  --blue: #4a8cf7;
+  --blue-bg: rgba(74,140,247,0.12);
+  --green: #34c759;
+  --green-bg: rgba(52,199,89,0.12);
+  --red: #ff4757;
+  --red-bg: rgba(255,71,87,0.12);
+  --orange: #ff9f43;
+  --orange-bg: rgba(255,159,67,0.12);
+  --purple: #a55eea;
+  --purple-bg: rgba(165,94,234,0.12);
+  --cyan: #2ed8a3;
+  --cyan-bg: rgba(46,216,163,0.12);
+  --wall: #2d3139;
+  --floor: #1e2128;
+  --corridor: #1a1c22;
+  --door: #4a8cf7;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* ===== é¡¶é¨æ  ===== */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.topbar .badge {
+  font-size: 11px; padding: 3px 10px; border-radius: 10px;
+  background: var(--green-bg); color: var(--green); font-weight: 600;
+}
+.topbar .time { font-size: 12px; color: var(--text-dim); }
+
+.stats-row {
+  display: flex; gap: 6px;
+}
+.stat-pill {
+  padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.stat-pill .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.stat-pill .dot.on { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.stat-pill .dot.off { background: var(--red); }
+.stat-pill .dot.leave { background: var(--orange); }
+.stat-pill .dot.remote { background: var(--purple); }
+
+/* ===== å·¥å·æ  ===== */
+.toolbar {
+  padding: 12px 24px;
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap;
+}
+.toolbar .dept-filter {
+  display: flex; gap: 4px; flex-wrap: wrap;
+}
+.dept-chip {
+  padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text-dim); white-space: nowrap;
+}
+.dept-chip:hover { color: var(--text); border-color: var(--text-dim); }
+.dept-chip.active { background: var(--blue-bg); color: var(--blue); border-color: var(--blue); }
+.dept-chip.all { font-weight: 600; }
+
+.search-box {
+  position: relative; margin-left: auto;
+}
+.search-box input {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  padding: 7px 14px 7px 32px; font-size: 13px; color: var(--text); width: 200px;
+  outline: none; transition: all 0.2s;
+}
+.search-box input:focus { border-color: var(--blue); width: 240px; }
+.search-box input::placeholder { color: var(--text-muted); }
+.search-box .search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-size: 14px; pointer-events: none;
+}
+
+/* ===== ä¸»ç»å¸ ===== */
+.main-canvas {
+  padding: 20px 24px 40px;
+  display: flex; justify-content: center;
+}
+
+.office-plan {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  min-width: 1100px;
+  max-width: 1400px;
+  width: 100%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+
+/* å¢å£ */
+.wall-north, .wall-south, .wall-west, .wall-east {
+  position: absolute; background: var(--wall);
+}
+.wall-north { top: 0; left: 0; right: 0; height: 8px; border-radius: 20px 20px 0 0; }
+.wall-south { bottom: 0; left: 0; right: 0; height: 8px; border-radius: 0 0 20px 20px; }
+.wall-west  { top: 0; left: 0; bottom: 0; width: 8px; border-radius: 20px 0 0 20px; }
+.wall-east  { top: 0; right: 0; bottom: 0; width: 8px; border-radius: 0 20px 20px 0; }
+
+/* å¥å£é¨ */
+.door-entry {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  width: 80px; height: 6px; background: var(--door);
+  border-radius: 3px 3px 0 0; z-index: 2;
+}
+.door-entry::after {
+  content: 'å¥å£'; position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; color: var(--text-muted); white-space: nowrap;
+}
+
+/* çªæ· */
+.windows-row {
+  display: flex; justify-content: space-around; padding: 0 60px; margin-top: 12px;
+}
+.window-slot {
+  width: 140px; height: 6px; background: #3a4150; border-radius: 3px;
+  box-shadow: inset 0 0 8px rgba(74,140,247,0.15);
+}
+
+/* ===== åºå ===== */
+.office-zones {
+  display: flex; flex-direction: column; gap: 24px; margin-top: 24px;
+}
+.row-zones {
+  display: flex; gap: 40px; justify-content: center;
+}
+
+.zone {
+  position: relative;
+}
+.zone-label {
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.zone-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* è®¾æ½åº */
+.facility-row {
+  display: flex; gap: 12px; margin-bottom: 8px;
+}
+.facility {
+  background: var(--floor); border: 1px dashed var(--border); border-radius: 12px;
+  padding: 14px 18px; display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--text-dim); min-width: 110px;
+}
+.facility .ficon { font-size: 20px; }
+
+/* å·¥ä½ç½æ ¼ */
+.seats-grid {
+  display: grid; gap: 10px;
+}
+/* ææ¯ç åé¨ 2å */
+.grid-tech { grid-template-columns: repeat(2, 1fr); }
+/* äº§åè®¾è®¡é¨ 3å */
+.grid-product { grid-template-columns: repeat(3, 1fr); }
+/* å¸åºé¨ 2å */
+.grid-market { grid-template-columns: repeat(2, 1fr); }
+/* è¿è¥ç®¡çé¨ 2å */
+.grid-ops { grid-template-columns: repeat(2, 1fr); }
+/* è´¢å¡é¨ 2å */
+.grid-finance { grid-template-columns: repeat(2, 1fr); }
+
+/* å·¥ä½å¡ç */
+.seat-card {
+  background: var(--floor);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-width: 150px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.seat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border-color: var(--blue);
+  background: var(--surface-hover);
+  z-index: 10;
+}
+.seat-card.empty {
+  border-style: dashed; cursor: default; opacity: 0.4;
+}
+.seat-card.empty:hover {
+  transform: none; box-shadow: none; border-color: var(--border);
+  background: var(--floor);
+}
+.seat-card.feishu {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green);
+}
+.seat-card .seat-header {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.seat-card .seat-num {
+  font-size: 10px; color: var(--text-muted); font-weight: 600;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.seat-card .seat-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700;
+}
+.seat-card .seat-info { flex: 1; }
+.seat-card .seat-name {
+  font-size: 14px; font-weight: 600; color: var(--text);
+  margin-bottom: 2px;
+}
+.seat-card .seat-dept {
+  font-size: 11px; color: var(--text-dim);
+}
+.seat-card .seat-status {
+  font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px;
+  display: inline-block; margin-top: 4px;
+}
+.status-on { background: var(--green-bg); color: var(--green); }
+.status-off { background: var(--red-bg); color: var(--red); }
+.status-leave { background: var(--orange-bg); color: var(--orange); }
+.status-remote { background: var(--purple-bg); color: var(--purple); }
+
+/* ä¸åé¨é¨é¢è² */
+.dept-tech .seat-card:not(.empty):hover { border-color: var(--blue); }
+.dept-product .seat-card:not(.empty):hover { border-color: var(--cyan); }
+.dept-market .seat-card:not(.empty):hover { border-color: var(--orange); }
+.dept-ops .seat-card:not(.empty):hover { border-color: var(--purple); }
+.dept-finance .seat-card:not(.empty):hover { border-color: var(--green); }
+
+.seat-card .feishu-dot {
+  position: absolute; top: 8px; right: 8px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+/* ç©ºä½ */
+.seat-card.empty .seat-name { color: var(--text-muted); }
+
+/* ===== å¾ä¾ ===== */
+.legend-bar {
+  display: flex; gap: 20px; flex-wrap: wrap; padding: 14px 24px;
+  border-top: 1px solid var(--border); justify-content: center;
+  background: var(--surface);
+}
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* ===== å¼¹çª ===== */
+.modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7); z-index: 100;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
 .modal-overlay.show { display: flex; }
-.modal { background: #1a1f26; border: 1px solid #2f3336; border-radius: 20px; padding: 28px; width: 440px; max-height: 80vh; overflow-y: auto; position: relative; animation: modalIn 0.2s ease; }
-@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-.modal .close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: #2f3336; border: none; color: #e7e9ea; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.modal .close:hover { background: #3e4146; }
-.modal h3 { font-size: 20px; margin-bottom: 4px; }
-.modal .role-tag { font-size: 13px; color: #71767b; margin-bottom: 16px; }
-.modal .section { margin-top: 18px; }
-.modal .section-title { font-size: 12px; text-transform: uppercase; color: #71767b; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600; }
-.modal .asset-table { width: 100%; border-collapse: collapse; }
-.modal .asset-table td { padding: 8px 0; font-size: 13px; border-bottom: 1px solid #2a2e33; }
-.modal .asset-table td:last-child { text-align: right; color: #71767b; }
-.modal .contact-card { background: #14181d; border-radius: 12px; padding: 14px; margin-top: 4px; }
-.modal .contact-card .c-name { font-size: 14px; font-weight: 600; color: #1d9bf0; }
-.modal .contact-card .c-info { font-size: 12px; color: #71767b; margin-top: 4px; }
-.modal .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
-.legend { padding: 16px 32px; display: flex; gap: 20px; flex-wrap: wrap; border-top: 1px solid #2f3336; margin: 0 32px; }
-.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #71767b; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-.legend-dot.on { background: #00ba7c; }
-.legend-dot.off { background: #f4212e; }
-.legend-dot.leave { background: #ff8a00; }
-.legend-dot.remote { background: #8c52ff; }
-.legend-dot.empty { background: #2a2e33; border: 1px dashed #3e4146; }
-.legend-dot.feishu { background: #00ba7c; border: 2px solid #00ba7c; }
-.footer { text-align: center; padding: 24px; color: #3e4146; font-size: 12px; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  padding: 28px; width: 420px; max-height: 80vh; overflow-y: auto;
+  position: relative; animation: modalIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal .close-btn {
+  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+  border-radius: 50%; background: var(--border); border: none; color: var(--text);
+  font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal .close-btn:hover { background: #4a4f5a; }
+.modal .m-avatar {
+  width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 26px; font-weight: 700; margin-bottom: 12px;
+}
+.modal h3 { font-size: 20px; margin-bottom: 2px; }
+.modal .m-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 14px; }
+.modal .m-status {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+  border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 16px;
+}
+.modal .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.modal .info-item { background: var(--floor); border-radius: 8px; padding: 10px 12px; }
+.modal .info-item .info-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.modal .info-item .info-value { font-size: 13px; color: var(--text); font-weight: 500; }
+.modal .contact-card {
+  background: var(--floor); border-radius: 12px; padding: 14px; margin-top: 8px;
+  border-left: 3px solid var(--blue);
+}
+.modal .contact-card .cc-name { font-size: 14px; font-weight: 600; color: var(--blue); }
+.modal .contact-card .cc-note { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+/* ååºå¼ */
+@media (max-width: 1200px) {
+  .office-plan { min-width: auto; padding: 20px; }
+  .row-zones { flex-wrap: wrap; gap: 20px; }
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>办公座位图 <span class="data-badge" id="dataSource">演示数据</span></h1>
-  <div class="stats">
-    <span>在岗 <b style="color:#00ba7c" id="statOn">-</b></span>
-    <span>休假 <b style="color:#f4212e" id="statOff">-</b></span>
-    <span>外出 <b style="color:#ff8a00" id="statLeave">-</b></span>
-    <span>远程 <b style="color:#8c52ff" id="statRemote">-</b></span>
+<div class="topbar">
+  <div class="topbar-left">
+    <h1>å·¥ä½å®¤ Â· å·¥ä½å¾</h1>
+    <span class="badge" id="dataBadge">é£ä¹¦åæ­¥</span>
+    <span class="time" id="updateTime"></span>
+  </div>
+  <div class="stats-row" id="statsRow"></div>
+</div>
+
+<div class="toolbar">
+  <div class="dept-filter" id="deptFilter"></div>
+  <div class="search-box">
+    <span class="search-icon">ð</span>
+    <input type="text" id="searchInput" placeholder="æç´¢åå·¥å§åæå·¥ä½å·..." oninput="applyFilters()">
   </div>
 </div>
 
-<div class="tabs" id="tabs"></div>
-<div class="floor" id="floorContent"></div>
+<div class="main-canvas">
+  <div class="office-plan">
+    <div class="wall-north"></div>
+    <div class="wall-south"></div>
+    <div class="wall-west"></div>
+    <div class="wall-east"></div>
+    <div class="door-entry"></div>
 
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot on"></div> 在岗</div>
-  <div class="legend-item"><div class="legend-dot off"></div> 病假/事假</div>
-  <div class="legend-item"><div class="legend-dot leave"></div> 外出/出差</div>
-  <div class="legend-item"><div class="legend-dot remote"></div> 远程办公</div>
-  <div class="legend-item"><div class="legend-dot empty"></div> 空位</div>
-  <div class="legend-item"><div class="legend-dot feishu"></div> 飞书同步</div>
+    <!-- çªæ· -->
+    <div class="windows-row">
+      <div class="window-slot"></div>
+      <div class="window-slot"></div>
+      <div class="window-slot"></div>
+      <div class="window-slot"></div>
+      <div class="window-slot"></div>
+      <div class="window-slot"></div>
+    </div>
+
+    <!-- è®¾æ½åº -->
+    <div class="facility-row" style="margin-top:16px;justify-content:center;gap:16px;">
+      <div class="facility"><span class="ficon">â</span> è¶æ°´é´</div>
+      <div class="facility"><span class="ficon">ð</span> ä¼è®®å®¤</div>
+      <div class="facility"><span class="ficon">ð¨ï¸</span> æå°åº</div>
+      <div class="facility"><span class="ficon">ð¦</span> å¨ç©é´</div>
+    </div>
+
+    <!-- åå¬åº -->
+    <div class="office-zones" id="officeZones"></div>
+  </div>
+</div>
+
+<div class="legend-bar">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div> å¨å²</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> çå/äºå</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div> å¤åº/åºå·®</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> è¿ç¨åå¬</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--border);border:1px dashed var(--text-muted)"></div> ç©ºä½</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green);box-shadow:0 0 0 2px var(--green)"></div> é£ä¹¦åæ­¥</div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
   <div class="modal" id="modal"></div>
 </div>
 
-<div class="footer">员工座位图系统 v2.0 · 对接飞书通讯录 · 可嵌入飞书网页应用</div>
-
 <script>
-// ===== 飞书真实数据（内嵌） =====
-const __FEISHU_DATA__ = {"update_time":"2026-06-13 18:56:57","total":11,"users":[{"name":"陈智威","department":"运营管理部","status":"remote","status_label":"远程办公","user_id":"3691cg5a","is_feishu":true,"assets":{"部门":"运营管理部","工位号":"006688","资产":["笔记本电脑","显示器"],"替补联系人":"1212331"},"contact":{"name":"1212331","role":"部门同事","note":"陈智威当前远程办公，工作事宜请联系替补联系人"}},{"name":"沈月","department":"运营管理部","status":"off","status_label":"病假事假","user_id":"","is_feishu":false,"assets":{"部门":"运营管理部","工位号":"006689","资产":["台式主机","显示器"],"替补联系人":"12212"},"contact":{"name":"12212","role":"部门同事","note":"沈月当前病假事假，工作事宜请联系替补联系人"}},{"name":"吴琼","department":"市场部","status":"off","status_label":"年假","user_id":"","is_feishu":false,"assets":{"部门":"市场部","工位号":"006690","资产":["手机"]}},{"name":"张一","department":"市场部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"市场部","工位号":"006691","资产":["电话机"]}},{"name":"张三","department":"财务部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"财务部","工位号":"006692","资产":["笔记本电脑","台式主机","显示器"]}},{"name":"李四","department":"财务部","status":"off","status_label":"病假事假","user_id":"","is_feishu":false,"assets":{"部门":"财务部","工位号":"006693","资产":["显示器","笔记本电脑"]}},{"name":"王五","department":"技术研发部","status":"off","status_label":"年假","user_id":"","is_feishu":false,"assets":{"部门":"技术研发部","工位号":"006694","资产":["手机","笔记本电脑"]}},{"name":"陈六","department":"技术研发部","status":"remote","status_label":"远程办公","user_id":"","is_feishu":false,"assets":{"部门":"技术研发部","工位号":"006695","资产":["笔记本电脑"]}},{"name":"覃七","department":"产品设计部","status":"remote","status_label":"远程办公","user_id":"","is_feishu":false,"assets":{"部门":"产品设计部","工位号":"006696","资产":["台式主机","笔记本电脑"]}},{"name":"朱八","department":"产品设计部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"产品设计部","工位号":"006697","资产":["手机"]}},{"name":"黄九","department":"产品设计部","status":"on","status_label":"在岗","user_id":"","is_feishu":false,"assets":{"部门":"产品设计部","工位号":"006698","资产":["电话机","显示器"]}}]};
+// ===== é£ä¹¦çå®æ°æ®ï¼ååµï¼ =====
+const __FEISHU_DATA__ = {"update_time":"2026-06-13 18:56:57","total":11,"users":[{"name":"éæºå¨","department":"è¿è¥ç®¡çé¨","status":"remote","status_label":"è¿ç¨åå¬","user_id":"3691cg5a","is_feishu":true,"assets":{"é¨é¨":"è¿è¥ç®¡çé¨","å·¥ä½å·":"006688","èµäº§":["ç¬è®°æ¬çµè","æ¾ç¤ºå¨"],"æ¿è¡¥èç³»äºº":"1212331"},"contact":{"name":"1212331","role":"é¨é¨åäº","note":"éæºå¨å½åè¿ç¨åå¬ï¼å·¥ä½äºå®è¯·èç³»æ¿è¡¥èç³»äºº"}},{"name":"æ²æ","department":"è¿è¥ç®¡çé¨","status":"off","status_label":"çåäºå","user_id":"","is_feishu":false,"assets":{"é¨é¨":"è¿è¥ç®¡çé¨","å·¥ä½å·":"006689","èµäº§":["å°å¼ä¸»æº","æ¾ç¤ºå¨"],"æ¿è¡¥èç³»äºº":"12212"},"contact":{"name":"12212","role":"é¨é¨åäº","note":"æ²æå½åçåäºåï¼å·¥ä½äºå®è¯·èç³»æ¿è¡¥èç³»äºº"}},{"name":"å´ç¼","department":"å¸åºé¨","status":"off","status_label":"å¹´å","user_id":"","is_feishu":false,"assets":{"é¨é¨":"å¸åºé¨","å·¥ä½å·":"006690","èµäº§":["ææº"]}},{"name":"å¼ ä¸","department":"å¸åºé¨","status":"on","status_label":"å¨å²","user_id":"","is_feishu":false,"assets":{"é¨é¨":"å¸åºé¨","å·¥ä½å·":"006691","èµäº§":["çµè¯æº"]}},{"name":"å¼ ä¸","department":"è´¢å¡é¨","status":"on","status_label":"å¨å²","user_id":"","is_feishu":false,"assets":{"é¨é¨":"è´¢å¡é¨","å·¥ä½å·":"006692","èµäº§":["ç¬è®°æ¬çµè","å°å¼ä¸»æº","æ¾ç¤ºå¨"]}},{"name":"æå","department":"è´¢å¡é¨","status":"off","status_label":"çåäºå","user_id":"","is_feishu":false,"assets":{"é¨é¨":"è´¢å¡é¨","å·¥ä½å·":"006693","èµäº§":["æ¾ç¤ºå¨","ç¬è®°æ¬çµè"]}},{"name":"çäº","department":"ææ¯ç åé¨","status":"off","status_label":"å¹´å","user_id":"","is_feishu":false,"assets":{"é¨é¨":"ææ¯ç åé¨","å·¥ä½å·":"006694","èµäº§":["ææº","ç¬è®°æ¬çµè"]}},{"name":"éå­","department":"ææ¯ç åé¨","status":"remote","status_label":"è¿ç¨åå¬","user_id":"","is_feishu":false,"assets":{"é¨é¨":"ææ¯ç åé¨","å·¥ä½å·":"006695","èµäº§":["ç¬è®°æ¬çµè"]}},{"name":"è¦ä¸","department":"äº§åè®¾è®¡é¨","status":"remote","status_label":"è¿ç¨åå¬","user_id":"","is_feishu":false,"assets":{"é¨é¨":"äº§åè®¾è®¡é¨","å·¥ä½å·":"006696","èµäº§":["å°å¼ä¸»æº","ç¬è®°æ¬çµè"]}},{"name":"æ±å«","department":"äº§åè®¾è®¡é¨","status":"on","status_label":"å¨å²","user_id":"","is_feishu":false,"assets":{"é¨é¨":"äº§åè®¾è®¡é¨","å·¥ä½å·":"006697","èµäº§":["ææº"]}},{"name":"é»ä¹","department":"äº§åè®¾è®¡é¨","status":"on","status_label":"å¨å²","user_id":"","is_feishu":false,"assets":{"é¨é¨":"äº§åè®¾è®¡é¨","å·¥ä½å·":"006698","èµäº§":["çµè¯æº","æ¾ç¤ºå¨"]}}]};
 
-const statusLabels = { on: '在岗', off: '病假/事假', leave: '外出/出差', remote: '远程办公', empty: '空位' };
-const statusCss = { on: 'status-on', off: 'status-off', leave: 'status-leave', remote: 'status-remote' };
-
-// 5个部门的列数布局
-const deptLayouts = {
-  '技术研发部': 'layout-tech',
-  '产品设计部': 'layout-product',
-  '市场部': 'layout-market',
-  '运营管理部': 'layout-ops',
-  '财务部': 'layout-finance'
+const deptOrder = ['ææ¯ç åé¨', 'äº§åè®¾è®¡é¨', 'å¸åºé¨', 'è¿è¥ç®¡çé¨', 'è´¢å¡é¨'];
+const deptColors = {
+  'ææ¯ç åé¨': { bg: 'rgba(74,140,247,0.08)', border: 'var(--blue)', class: 'dept-tech', emoji: 'ð»' },
+  'äº§åè®¾è®¡é¨': { bg: 'rgba(46,216,163,0.08)', border: 'var(--cyan)', class: 'dept-product', emoji: 'ð¨' },
+  'å¸åºé¨':     { bg: 'rgba(255,159,67,0.08)', border: 'var(--orange)', class: 'dept-market', emoji: 'ð' },
+  'è¿è¥ç®¡çé¨': { bg: 'rgba(165,94,234,0.08)', border: 'var(--purple)', class: 'dept-ops', emoji: 'âï¸' },
+  'è´¢å¡é¨':     { bg: 'rgba(52,199,89,0.08)', border: 'var(--green)', class: 'dept-finance', emoji: 'ð°' },
 };
+const gridClasses = {
+  'ææ¯ç åé¨': 'grid-tech', 'äº§åè®¾è®¡é¨': 'grid-product',
+  'å¸åºé¨': 'grid-market', 'è¿è¥ç®¡çé¨': 'grid-ops', 'è´¢å¡é¨': 'grid-finance'
+};
+const statusLabels = { on: 'å¨å²', off: 'çå/äºå', leave: 'å¤åº/åºå·®', remote: 'è¿ç¨åå¬' };
+const statusCss = { on: 'status-on', off: 'status-off', leave: 'status-leave', remote: 'status-remote' };
+const avatarColors = ['#4a8cf7','#2ed8a3','#ff9f43','#a55eea','#34c759','#ff6b81','#45aaf2','#fed330','#26de81','#fd9644'];
 
-const deptOrder = ['技术研发部', '产品设计部', '市场部', '运营管理部', '财务部'];
+let allUsers = [];
+let currentDept = 'all';
+let searchTerm = '';
 
-// ===== 用真实数据构各部门 =====
-function buildDepartments() {
-  const data = __FEISHU_DATA__;
-  const deptMap = {};
-  for (const u of data.users) {
-    const d = u.department || '未分配';
-    if (!deptMap[d]) deptMap[d] = [];
-    deptMap[d].push({
-      name: u.name,
-      role: u.department || '飞书用户',
-      status: u.status || 'on',
-      status_label: u.status_label || statusLabels[u.status] || '',
-      assets: u.assets || {},
-      contact: u.contact || null,
-      isFeishu: !!u.is_feishu
-    });
-  }
-
-  const depts = [];
-  for (const dn of deptOrder) {
-    const members = deptMap[dn] || [];
-    // 补充2个空位让布局好看些
-    for (let i = 0; i < 2; i++) {
-      members.push({ name: null, role: null, status: 'empty', assets: {}, isFeishu: false });
-    }
-    depts.push({
-      id: dn,
-      name: dn,
-      headcount: members.filter(m => m.status !== 'empty').length,
-      members: members,
-      layoutClass: deptLayouts[dn] || 'layout-tech'
-    });
-  }
-  return depts;
+function buildUsers() {
+  return __FEISHU_DATA__.users.map((u, i) => ({
+    name: u.name,
+    dept: u.department || 'æªåé',
+    status: u.status || 'on',
+    statusLabel: u.status_label || statusLabels[u.status] || '',
+    seatNum: (u.assets || {}).å·¥ä½å· || '',
+    assets: u.assets || {},
+    contact: u.contact || null,
+    isFeishu: !!u.is_feishu,
+    userId: u.user_id || '',
+    avatarColor: avatarColors[i % avatarColors.length],
+    initial: u.name.charAt(0)
+  }));
 }
-
-let departments = buildDepartments();
 
 function init() {
-  const badge = document.getElementById('dataSource');
-  badge.textContent = `飞书同步 (${__FEISHU_DATA__.total}人)`;
-  badge.style.background = 'rgba(0,186,124,0.2)';
-  badge.style.color = '#00ba7c';
-
-  const tabs = document.getElementById('tabs');
-  departments.forEach((dept, i) => {
-    const tab = document.createElement('div');
-    tab.className = 'tab' + (i === 0 ? ' active' : '');
-    tab.textContent = dept.name + ' (' + dept.headcount + '人)';
-    tab.onclick = () => switchDept(i);
-    tabs.appendChild(tab);
-  });
-  switchDept(0);
-}
-
-function switchDept(i) {
-  document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === i));
-  renderDept(departments[i]);
+  allUsers = buildUsers();
+  document.getElementById('updateTime').textContent = 'æ´æ° ' + __FEISHU_DATA__.update_time;
+  document.getElementById('dataBadge').textContent = 'é£ä¹¦åæ­¥ (' + __FEISHU_DATA__.total + 'äºº)';
+  buildDeptFilter();
+  renderAll();
   updateStats();
 }
 
-function renderDept(dept) {
-  const fc = document.getElementById('floorContent');
-  fc.innerHTML = `
-    <div class="floor-title">${dept.name} 办公室 <span class="dept-tag">${dept.headcount}人</span></div>
-    <div class="office-map ${dept.layoutClass}" id="map"></div>
-  `;
-  const map = document.getElementById('map');
-  dept.members.forEach((m) => {
-    const seat = document.createElement('div');
-    let cls = 'seat';
-    if (m.status === 'empty') cls += ' empty';
-    if (m.isFeishu) cls += ' feishu';
-    seat.className = cls;
-
-    if (m.status === 'empty') {
-      seat.innerHTML = '<div style="color:#3e4146;font-size:13px;">空位</div>';
-    } else {
-      const sc = statusCss[m.status] || '';
-      const label = m.status_label || statusLabels[m.status] || '';
-      seat.innerHTML = `
-        <div class="name">${m.name}</div>
-        <div class="role">${m.role}</div>
-        <div class="status ${sc}">${label}</div>
-        ${m.isFeishu ? '<div class="feishu-tag">飞书同步</div>' : ''}
-      `;
-      seat.onclick = () => showDetail(m);
-    }
-    map.appendChild(seat);
+function buildDeptFilter() {
+  const container = document.getElementById('deptFilter');
+  container.innerHTML = '<div class="dept-chip all active" onclick="filterDept(\'all\')">å¨é¨ (11äºº)</div>';
+  deptOrder.forEach(d => {
+    const cnt = allUsers.filter(u => u.dept === d).length;
+    const chip = document.createElement('div');
+    chip.className = 'dept-chip';
+    chip.textContent = d + ' (' + cnt + 'äºº)';
+    chip.onclick = () => filterDept(d);
+    container.appendChild(chip);
   });
 }
 
-function showDetail(member) {
+function filterDept(dept) {
+  currentDept = dept;
+  document.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.dept-chip').forEach(c => {
+    if ((dept === 'all' && c.classList.contains('all')) || c.textContent.startsWith(dept)) {
+      c.classList.add('active');
+    }
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+  renderAll();
+}
+
+function renderAll() {
+  const zones = document.getElementById('officeZones');
+  zones.innerHTML = '';
+
+  deptOrder.forEach(deptName => {
+    if (currentDept !== 'all' && currentDept !== deptName) return;
+    const members = allUsers.filter(u => u.dept === deptName);
+    const visible = members.filter(u => {
+      if (!searchTerm) return true;
+      return u.name.toLowerCase().includes(searchTerm) ||
+             u.seatNum.includes(searchTerm) ||
+             u.dept.toLowerCase().includes(searchTerm);
+    });
+    if (visible.length === 0) return;
+
+    const dc = deptColors[deptName];
+    const zone = document.createElement('div');
+    zone.className = 'zone';
+    zone.innerHTML = `
+      <div class="zone-label">${dc.emoji} ${deptName}</div>
+      <div class="seats-grid ${gridClasses[deptName]}" id="grid-${deptName.replace(/\s/g,'')}"></div>
+    `;
+    zones.appendChild(zone);
+
+    const grid = zone.querySelector('.seats-grid');
+    visible.forEach(u => {
+      const card = document.createElement('div');
+      let cls = 'seat-card';
+      if (u.isFeishu) cls += ' feishu';
+      card.className = cls;
+
+      card.innerHTML = `
+        ${u.isFeishu ? '<div class="feishu-dot"></div>' : ''}
+        <div class="seat-header">
+          <span class="seat-num">#${u.seatNum}</span>
+          <div class="seat-avatar" style="background:${u.avatarColor}20;color:${u.avatarColor}">${u.initial}</div>
+        </div>
+        <div class="seat-info">
+          <div class="seat-name">${u.name}</div>
+          <div class="seat-dept">${u.dept}</div>
+          <div class="seat-status ${statusCss[u.status] || ''}">${u.statusLabel}</div>
+        </div>
+      `;
+      card.onclick = () => showDetail(u);
+      grid.appendChild(card);
+    });
+
+    // è¡¥åç©ºä½
+    const emptySlots = Math.max(0, (currentDept === 'all' ? (deptName === 'äº§åè®¾è®¡é¨' ? 3 : 2) : 2) - visible.length);
+    for (let i = 0; i < emptySlots; i++) {
+      const card = document.createElement('div');
+      card.className = 'seat-card empty';
+      card.innerHTML = `
+        <div class="seat-header">
+          <span class="seat-num">ç©ºä½</span>
+          <div class="seat-avatar" style="background:var(--border);color:var(--text-muted)">â</div>
+        </div>
+        <div class="seat-info">
+          <div class="seat-name" style="color:var(--text-muted)">ç©ºé²å·¥ä½</div>
+          <div class="seat-dept">${deptName}</div>
+          <div class="seat-status" style="background:var(--border);color:var(--text-muted);display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;">å¾åé</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  });
+
+  updateStats();
+}
+
+function updateStats() {
+  let on = 0, off = 0, leave = 0, remote = 0;
+  allUsers.forEach(u => {
+    if (u.status === 'on') on++;
+    else if (u.status === 'off') off++;
+    else if (u.status === 'leave') leave++;
+    else if (u.status === 'remote') remote++;
+  });
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-pill"><span class="dot on"></span>å¨å² ${on}</div>
+    <div class="stat-pill"><span class="dot off"></span>ä¼å ${off}</div>
+    <div class="stat-pill"><span class="dot leave"></span>å¤åº ${leave}</div>
+    <div class="stat-pill"><span class="dot remote"></span>è¿ç¨ ${remote}</div>
+  `;
+}
+
+function showDetail(u) {
   const m = document.getElementById('modal');
   let assetsHtml = '';
-  for (const [k, v] of Object.entries(member.assets || {})) {
-    if (k === '替补联系人') continue;
-    const val = Array.isArray(v) ? v.join('、') : v;
-    if (!val) continue;
-    assetsHtml += `<tr><td>${k}</td><td>${val}</td></tr>`;
+  const assets = u.assets || {};
+  const keys = Object.keys(assets).filter(k => k !== 'æ¿è¡¥èç³»äºº' && k !== 'èµäº§');
+  keys.forEach(k => {
+    assetsHtml += `<div class="info-item"><div class="info-label">${k}</div><div class="info-value">${assets[k]}</div></div>`;
+  });
+  const assetList = assets['èµäº§'];
+  if (assetList && Array.isArray(assetList)) {
+    assetsHtml += `<div class="info-item"><div class="info-label">éå¤èµäº§</div><div class="info-value">${assetList.join('ã')}</div></div>`;
   }
+
   let contactHtml = '';
-  if (member.contact) {
+  if (u.contact) {
     contactHtml = `
       <div class="contact-card">
-        <div class="c-name">${member.contact.name} · ${member.contact.role || ''}</div>
-        <div class="c-info">${member.contact.note}</div>
+        <div class="cc-name">${u.contact.name} Â· ${u.contact.role || ''}</div>
+        <div class="cc-note">${u.contact.note || ''}</div>
       </div>
     `;
   }
-  const sc = statusCss[member.status] || '';
-  const label = member.status_label || statusLabels[member.status] || '';
-  const seatNum = (member.assets || {})['工位号'] || '';
+
+  const sc = statusCss[u.status] || '';
   m.innerHTML = `
-    <button class="close" onclick="closeModal()">✕</button>
-    <h3>${member.name}</h3>
-    <div class="role-tag">${member.role}${member.isFeishu ? ' · 飞书同步' : ''} · ${seatNum}</div>
-    <div class="status-badge ${sc}">${label}</div>
-    ${member.status !== 'on' && member.contact ? '<div class="section"><div class="section-title">工作对接人</div>' + contactHtml + '</div>' : ''}
-    <div class="section">
-      <div class="section-title">${member.isFeishu ? '飞书信息' : '公司资产'}</div>
-      <table class="asset-table">${assetsHtml}</table>
-    </div>
+    <button class="close-btn" onclick="closeModal()">â</button>
+    <div class="m-avatar" style="background:${u.avatarColor}20;color:${u.avatarColor}">${u.initial}</div>
+    <h3>${u.name}</h3>
+    <div class="m-sub">${u.dept} Â· ${u.seatNum}${u.isFeishu ? ' Â· é£ä¹¦åæ­¥' : ''}${u.userId ? ' Â· ID:' + u.userId : ''}</div>
+    <div class="m-status ${sc}">${u.statusLabel}</div>
+    <div class="info-grid">${assetsHtml}</div>
+    ${u.status !== 'on' && u.contact ? contactHtml : ''}
   `;
   document.getElementById('modalOverlay').classList.add('show');
 }
@@ -246,20 +604,7 @@ function closeModal() {
   document.getElementById('modalOverlay').classList.remove('show');
 }
 
-function updateStats() {
-  let on = 0, off = 0, leave = 0, remote = 0;
-  departments.forEach(d => d.members.forEach(m => {
-    if (m.status === 'on') on++;
-    else if (m.status === 'off') off++;
-    else if (m.status === 'leave') leave++;
-    else if (m.status === 'remote') remote++;
-  }));
-  document.getElementById('statOn').textContent = on;
-  document.getElementById('statOff').textContent = off;
-  document.getElementById('statLeave').textContent = leave;
-  document.getElementById('statRemote').textContent = remote;
-}
-
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 init();
 </script>
 </body>
