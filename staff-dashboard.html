@@ -52,19 +52,10 @@ body {
   z-index: 100;
   backdrop-filter: blur(12px);
 }
-.app-header h1 {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-}
-.user-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.app-header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+.user-bar { display: flex; align-items: center; gap: 12px; }
 .user-avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 50%;
   background: var(--accent);
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 600; color: #fff;
@@ -74,123 +65,53 @@ body {
   font-size: 11px; color: var(--text-muted);
   background: var(--bg-card); padding: 2px 8px; border-radius: 10px;
 }
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-  padding: 20px 32px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.stat-icon {
-  width: 44px; height: 44px;
-  border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-}
+
+/* Stats */
+.stats-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 20px 32px; max-width: 1400px; margin: 0 auto; }
+.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
+.stat-icon { width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 20px; }
 .stat-icon.green { background: rgba(52,199,89,0.15); color: var(--green); }
 .stat-icon.orange { background: rgba(255,149,0,0.15); color: var(--orange); }
 .stat-icon.blue { background: rgba(90,200,250,0.15); color: var(--blue); }
 .stat-icon.purple { background: rgba(175,82,222,0.15); color: var(--purple); }
 .stat-icon.red { background: rgba(255,59,48,0.15); color: var(--red); }
-.stat-value {
-  font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1;
-}
+.stat-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
 .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-.main-content {
-  padding: 8px 32px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
+
+/* Main */
+.main-content { padding: 8px 32px 40px; max-width: 1400px; margin: 0 auto; }
 .dept-section { margin-bottom: 28px; }
-.dept-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 14px;
-  padding: 0 4px;
-}
-.dept-header h2 {
-  font-size: 16px; font-weight: 600; color: var(--text-primary);
-}
-.dept-count {
-  font-size: 12px; color: var(--text-muted);
-  background: var(--bg-card); padding: 2px 10px; border-radius: 10px;
-}
-.dept-divider {
-  flex: 1; height: 1px; background: var(--border); margin-left: 8px;
-}
-.employee-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
-}
+.dept-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding: 0 4px; }
+.dept-header h2 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.dept-count { font-size: 12px; color: var(--text-muted); background: var(--bg-card); padding: 2px 10px; border-radius: 10px; }
+.dept-divider { flex: 1; height: 1px; background: var(--border); margin-left: 8px; }
+.employee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .employee-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  cursor: pointer;
-  transition: all var(--transition);
-  position: relative;
-  overflow: hidden;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px; cursor: pointer;
+  transition: all var(--transition); position: relative; overflow: hidden;
 }
-.employee-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-.employee-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-.card-header {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
-}
+.employee-card:hover { background: var(--bg-card-hover); border-color: var(--border-light); transform: translateY(-2px); box-shadow: var(--shadow); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .card-avatar {
   width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 600; color: #fff;
-  position: relative;
+  font-size: 16px; font-weight: 600; color: #fff; position: relative;
 }
 .birthday-badge {
-  position: absolute; top: -4px; right: -4px;
-  width: 18px; height: 18px;
+  position: absolute; top: -4px; right: -4px; width: 18px; height: 18px;
   background: #ff6b6b; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 10px; animation: bounce 1s infinite;
 }
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 .card-info { flex:1; min-width:0; }
-.card-name {
-  font-size: 14px; font-weight: 600; line-height: 1.2;
-  display: flex; align-items: center; gap: 6px;
-}
+.card-name { font-size: 14px; font-weight: 600; line-height: 1.2; display: flex; align-items: center; gap: 6px; }
 .card-role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 .card-detail { margin-top: 10px; }
-.detail-row {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
-}
+.detail-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
 .detail-row .label { color: var(--text-muted); flex-shrink: 0; }
-.status-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 500;
-  padding: 3px 10px; border-radius: 20px;
-  margin-top: 6px;
-}
+.status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-top: 6px; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .status-dot.online { background: var(--green); box-shadow: 0 0 6px rgba(52,199,89,0.5); }
 .status-dot.meeting { background: var(--orange); box-shadow: 0 0 6px rgba(255,149,0,0.5); }
@@ -200,6 +121,45 @@ body {
 .status-dot.remote { background: var(--cyan); box-shadow: 0 0 6px rgba(50,173,230,0.5); }
 .status-dot.vacation { background: var(--gray); box-shadow: 0 0 6px rgba(142,142,147,0.5); }
 
+/* Asset Center */
+.asset-center { max-width: 1400px; margin: 0 auto 20px; padding: 0 32px; }
+.asset-center-header {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 20px; margin-bottom: 12px;
+}
+.asset-center-header h3 { font-size: 15px; font-weight: 600; }
+.asset-center-actions { display: flex; gap: 8px; }
+.btn {
+  padding: 7px 16px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text-primary); font-size: 12px;
+  cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 5px;
+}
+.btn:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-light); }
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+.btn-danger { border-color: rgba(255,59,48,0.3); color: var(--red); }
+.btn-danger:hover { border-color: var(--red); background: rgba(255,59,48,0.1); }
+.asset-filter-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.asset-filter-row select, .asset-filter-row input {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text-primary); padding: 6px 10px; font-size: 12px; outline: none;
+}
+.asset-filter-row select:focus, .asset-filter-row input:focus { border-color: var(--accent); }
+.asset-table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.asset-full-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.asset-full-table th, .asset-full-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+.asset-full-table th { color: var(--text-muted); font-weight: 500; background: var(--bg-panel); position: sticky; top: 0; }
+.asset-full-table tr:hover td { background: rgba(255,255,255,0.02); }
+.asset-full-table tr:last-child td { border-bottom: none; }
+.status-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+.status-tag.active { background: rgba(52,199,89,0.15); color: var(--green); }
+.status-tag.repair { background: rgba(255,149,0,0.15); color: var(--orange); }
+.status-tag.idle { background: rgba(142,142,147,0.15); color: var(--gray); }
+.status-tag.scrap { background: rgba(255,59,48,0.15); color: var(--red); }
+.empty-state { text-align: center; padding: 32px; color: var(--text-muted); font-size: 13px; }
+
 /* Panel */
 .overlay {
   position: fixed; top:0; left:0; right:0; bottom:0;
@@ -208,104 +168,67 @@ body {
   animation: fadeIn 0.2s;
 }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.detail-panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  width: 560px; max-width: 95vw; max-height: 85vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+.detail-panel, .modal-panel {
+  background: var(--bg-panel); border: 1px solid var(--border);
+  border-radius: 16px; width: 560px; max-width: 95vw; max-height: 85vh;
+  overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   animation: slideUp 0.25s;
 }
+.modal-panel { width: 480px; }
 @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
-.panel-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border);
+.panel-header, .modal-header {
+  padding: 20px 24px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
   position: sticky; top:0; background: var(--bg-panel); z-index:1;
   border-radius: 16px 16px 0 0;
 }
-.panel-header h3 { font-size: 16px; font-weight: 600; }
-.panel-close {
+.panel-header h3, .modal-header h3 { font-size: 16px; font-weight: 600; }
+.panel-close, .modal-close {
   width: 28px; height: 28px; border-radius: 50%;
   border: none; background: var(--bg-card); color: var(--text-secondary);
   cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
   transition: var(--transition);
 }
-.panel-close:hover { background: var(--border-light); color: var(--text-primary); }
-.panel-body { padding: 24px; }
+.panel-close:hover, .modal-close:hover { background: var(--border-light); color: var(--text-primary); }
+.panel-body, .modal-body { padding: 24px; }
 .panel-profile { display: flex; gap: 16px; margin-bottom: 24px; align-items: center; }
-.panel-avatar {
-  width: 64px; height: 64px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 600; color: #fff;
-}
+.panel-avatar { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 600; color: #fff; }
 .panel-info h4 { font-size: 18px; font-weight: 600; }
 .panel-info .sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 .panel-section { margin-top: 20px; }
-.panel-section h5 {
-  font-size: 13px; font-weight: 600; color: var(--text-secondary);
-  text-transform: uppercase; letter-spacing: 0.5px;
-  margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-}
+.panel-section h5 { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 .status-selector { display: flex; flex-wrap: wrap; gap: 8px; }
-.status-option {
-  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
-  background: var(--bg-card); color: var(--text-secondary);
-  font-size: 12px; cursor: pointer; transition: var(--transition);
-  white-space: nowrap;
-}
+.status-option { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: var(--transition); white-space: nowrap; }
 .status-option:hover { border-color: var(--accent); color: var(--text-primary); }
 .status-option.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .status-option.locked { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 .asset-table { width: 100%; border-collapse: collapse; }
-.asset-table th, .asset-table td {
-  padding: 8px 12px; font-size: 12px; text-align: left;
-  border-bottom: 1px solid var(--border);
-}
+.asset-table th, .asset-table td { padding: 8px 12px; font-size: 12px; text-align: left; border-bottom: 1px solid var(--border); }
 .asset-table th { color: var(--text-muted); font-weight: 500; }
 .task-item {
   background: var(--bg-card); border-radius: var(--radius-sm);
-  padding: 12px 14px; margin-bottom: 8px;
-  border-left: 3px solid var(--accent);
+  padding: 12px 14px; margin-bottom: 8px; border-left: 3px solid var(--accent);
 }
 .task-item .task-name { font-size: 13px; font-weight: 500; }
 .task-item .task-meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; display: flex; gap: 16px; }
-.progress-bar {
-  height: 4px; background: var(--border); border-radius: 2px;
-  margin-top: 6px; overflow: hidden;
-}
+.progress-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 6px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
 .progress-fill.green { background: var(--green); }
 .progress-fill.orange { background: var(--orange); }
 .progress-fill.red { background: var(--red); }
-.birthday-notice {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 12px; color: #ff6b6b; margin-top: 8px;
+
+/* Modal Form */
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 500; }
+.form-group select, .form-group input {
+  width: 100%; padding: 8px 12px; border-radius: 6px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-primary); font-size: 13px; outline: none;
 }
-.legend-bar {
-  display: flex; gap: 16px; padding: 0 32px 16px;
-  max-width: 1400px; margin: 0 auto; flex-wrap: wrap;
-  align-items: center;
-}
-.legend-item {
-  display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted);
-}
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.role-switcher {
-  display: flex; gap: 4px; background: var(--bg-card); border-radius: 8px; padding: 3px;
-}
-.role-btn {
-  padding: 4px 12px; border-radius: 6px; border: none; cursor: pointer;
-  background: transparent; color: var(--text-secondary); font-size: 12px;
-  transition: var(--transition);
-}
-.role-btn.active { background: var(--accent); color: #fff; }
-.role-btn:hover:not(.active) { color: var(--text-primary); }
-.no-access {
-  text-align: center; padding: 40px; color: var(--text-muted);
-}
+.form-group select:focus, .form-group input:focus { border-color: var(--accent); }
+.form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+
+/* Toast */
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
   background: var(--accent); color: #fff; padding: 10px 20px;
@@ -314,12 +237,27 @@ body {
 }
 @keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(10px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
 @keyframes toastOut { from{opacity:1} to{opacity:0} }
+
+/* Legend */
+.legend-bar { display: flex; gap: 16px; padding: 0 32px 16px; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; align-items: center; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Role Switcher */
+.role-switcher { display: flex; gap: 4px; background: var(--bg-card); border-radius: 8px; padding: 3px; }
+.role-btn { padding: 4px 12px; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: var(--text-secondary); font-size: 12px; transition: var(--transition); }
+.role-btn.active { background: var(--accent); color: #fff; }
+.role-btn:hover:not(.active) { color: var(--text-primary); }
+.no-access { text-align: center; padding: 40px; color: var(--text-muted); }
+
 @media (max-width: 768px) {
   .app-header { padding: 16px; }
   .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 12px 16px; gap: 8px; }
   .main-content { padding: 8px 16px 32px; }
   .employee-grid { grid-template-columns: 1fr; }
-  .detail-panel { width: 100vw; max-width: 100vw; border-radius: 0; max-height: 100vh; }
+  .detail-panel, .modal-panel { width: 100vw; max-width: 100vw; border-radius: 0; max-height: 100vh; }
+  .asset-center { padding: 0 16px; }
+  .asset-center-header { flex-direction: column; gap: 8px; }
 }
 </style>
 </head>
@@ -337,6 +275,8 @@ body {
 </div>
 
 <div class="stats-bar" id="statsBar"></div>
+
+<div id="assetCenterContainer"></div>
 
 <div class="legend-bar">
   <span style="font-size:11px;color:var(--text-muted)">状态图例：</span>
@@ -359,35 +299,73 @@ body {
 const AVATAR_COLORS = ['#3370ff','#34c759','#ff9500','#af52de','#ff3b30','#5ac8fa','#ffcc00','#32ade6','#ff6482','#bf5af2','#30d158','#ff9f0a','#64d2ff','#ff375f'];
 
 const STATUS_MAP = {
-  online:    { label:'在岗',     cls:'online',   color:'#34c759', icon:'●', type:'manual' },
-  meeting:   { label:'开会中',   cls:'meeting',  color:'#ff9500', icon:'◉', type:'manual' },
-  away:      { label:'临时离开', cls:'away',     color:'#ffcc00', icon:'◐', type:'manual' },
-  out:       { label:'外出中',   cls:'out',      color:'#5ac8fa', icon:'◈', type:'approval' },
-  biztrip:   { label:'出差中',   cls:'biztrip',  color:'#af52de', icon:'◆', type:'approval' },
-  remote:    { label:'远程办公', cls:'remote',    color:'#32ade6', icon:'◊', type:'approval' },
-  vacation:  { label:'休假',     cls:'vacation',  color:'#8e8e93', icon:'○', type:'approval' }
+  online:   { label:'在岗',     cls:'online',   color:'#34c759', type:'manual' },
+  meeting:  { label:'开会中',   cls:'meeting',  color:'#ff9500', type:'manual' },
+  away:     { label:'临时离开', cls:'away',     color:'#ffcc00', type:'manual' },
+  out:      { label:'外出中',   cls:'out',      color:'#5ac8fa', type:'approval' },
+  biztrip:  { label:'出差中',   cls:'biztrip',  color:'#af52de', type:'approval' },
+  remote:   { label:'远程办公', cls:'remote',    color:'#32ade6', type:'approval' },
+  vacation: { label:'休假',     cls:'vacation',  color:'#8e8e93', type:'approval' }
 };
+
+const ASSET_TYPES = ['台式电脑','显示器','笔记本','键鼠外设','打印机','扫描仪','其他'];
+const ASSET_STATUSES = ['在用','维修中','闲置','已报废'];
 
 const DEPARTMENTS = ['风险管理部','财务部','人力行政部','客服部','信审部','运维部'];
 
-// 完整员工数据
 const EMPLOYEES = [
-  { id:'e01', name:'赵一',   dept:'风险管理部', role:'部门总监',     station:'A-301', status:'online',  avatarColor:AVATAR_COLORS[0],  birthday:'02-15', isManager:true,  isDeptHead:true,  assets:[{type:'台式电脑',   code:'WDPH-GDZC-2024-001', date:'2024-03-15', assetStatus:'在用'},{type:'显示器',code:'WDPH-GDZC-2024-002',date:'2024-03-15',assetStatus:'在用'}] },
-  { id:'e02', name:'钱二',   dept:'风险管理部', role:'风控专员',     station:'A-302', status:'online',  avatarColor:AVATAR_COLORS[1],  birthday:'06-24', isManager:false, isDeptHead:false, assets:[{type:'笔记本',code:'WDPH-GDZC-2024-003',date:'2024-04-01',assetStatus:'在用'}] },
-  { id:'e03', name:'张三',   dept:'风险管理部', role:'合规专员',     station:'A-303', status:'meeting', avatarColor:AVATAR_COLORS[2],  birthday:'09-10', isManager:false, isDeptHead:false, assets:[{type:'台式电脑',code:'WDPH-GDZC-2024-004',date:'2024-05-20',assetStatus:'在用'}] },
-  { id:'e04', name:'李四',   dept:'财务部',     role:'财务主管',     station:'B-201', status:'online',  avatarColor:AVATAR_COLORS[3],  birthday:'03-08', isManager:false, isDeptHead:true,  assets:[{type:'笔记本',code:'WDPH-GDZC-2024-005',date:'2024-01-10',assetStatus:'在用'},{type:'键鼠外设',code:'WDPH-GDZC-2024-006',date:'2024-01-10',assetStatus:'在用'}] },
-  { id:'e05', name:'王五',   dept:'财务部',     role:'会计',         station:'B-202', status:'away',    avatarColor:AVATAR_COLORS[4],  birthday:'11-20', isManager:false, isDeptHead:false, assets:[{type:'台式电脑',code:'WDPH-GDZC-2024-007',date:'2024-06-01',assetStatus:'在用'}] },
-  { id:'e06', name:'陈智威', dept:'人力行政部', role:'HR总监',       station:'C-101', status:'online',  avatarColor:AVATAR_COLORS[5],  birthday:'07-15', isManager:true,  isDeptHead:true,  isAssetAdmin:true, assets:[{type:'笔记本',code:'WDPH-GDZC-2024-008',date:'2024-02-01',assetStatus:'在用'},{type:'显示器',code:'WDPH-GDZC-2024-009',date:'2024-02-01',assetStatus:'在用'}] },
-  { id:'e07', name:'秦六',   dept:'人力行政部', role:'行政专员',     station:'C-102', status:'online',  avatarColor:AVATAR_COLORS[6],  birthday:'12-01', isManager:false, isDeptHead:false, assets:[{type:'台式电脑',code:'WDPH-GDZC-2024-010',date:'2024-07-10',assetStatus:'在用'}] },
-  { id:'e08', name:'孙七',   dept:'客服部',     role:'客服主管',     station:'D-401', status:'remote',  avatarColor:AVATAR_COLORS[7],  birthday:'05-06', isManager:false, isDeptHead:true,  assets:[{type:'笔记本',code:'WDPH-GDZC-2024-011',date:'2024-02-20',assetStatus:'在用'}] },
-  { id:'e09', name:'周八',   dept:'客服部',     role:'客服专员',     station:'D-402', status:'online',  avatarColor:AVATAR_COLORS[8],  birthday:'08-18', isManager:false, isDeptHead:false, assets:[{type:'台式电脑',code:'WDPH-GDZC-2024-012',date:'2024-03-05',assetStatus:'维修中'}] },
-  { id:'e10', name:'吴十',   dept:'信审部',     role:'审核主管',     station:'E-501', status:'biztrip', avatarColor:AVATAR_COLORS[9],  birthday:'01-30', isManager:false, isDeptHead:true,  assets:[{type:'笔记本',code:'WDPH-GDZC-2024-013',date:'2024-04-15',assetStatus:'在用'}] },
-  { id:'e11', name:'郑十一', dept:'信审部',     role:'审核专员',     station:'E-502', status:'online',  avatarColor:AVATAR_COLORS[10], birthday:'10-05', isManager:false, isDeptHead:false, assets:[{type:'台式电脑',code:'WDPH-GDZC-2024-014',date:'2024-05-01',assetStatus:'在用'}] },
-  { id:'e12', name:'冯十二', dept:'运维部',     role:'运维主管',     station:'F-601', status:'online',  avatarColor:AVATAR_COLORS[11], birthday:'04-22', isManager:false, isDeptHead:true,  assets:[{type:'台式电脑',code:'WDPH-GDZC-2024-015',date:'2024-01-20',assetStatus:'在用'},{type:'键鼠外设',code:'WDPH-GDZC-2024-016',date:'2024-01-20',assetStatus:'闲置'}] },
-  { id:'e13', name:'马十三', dept:'运维部',     role:'运维工程师',   station:'F-602', status:'vacation',avatarColor:AVATAR_COLORS[12], birthday:'09-28', isManager:false, isDeptHead:false, assets:[{type:'笔记本',code:'WDPH-GDZC-2024-017',date:'2024-06-10',assetStatus:'在用'}] },
+  { id:'e01', name:'赵一',   dept:'风险管理部', role:'部门总监',   station:'A-301', status:'online',  avatarColor:AVATAR_COLORS[0],  birthday:'02-15', isManager:true,  isDeptHead:true },
+  { id:'e02', name:'钱二',   dept:'风险管理部', role:'风控专员',   station:'A-302', status:'online',  avatarColor:AVATAR_COLORS[1],  birthday:'06-24', isManager:false, isDeptHead:false },
+  { id:'e03', name:'张三',   dept:'风险管理部', role:'合规专员',   station:'A-303', status:'meeting', avatarColor:AVATAR_COLORS[2],  birthday:'09-10', isManager:false, isDeptHead:false },
+  { id:'e04', name:'李四',   dept:'财务部',     role:'财务主管',   station:'B-201', status:'online',  avatarColor:AVATAR_COLORS[3],  birthday:'03-08', isManager:false, isDeptHead:true },
+  { id:'e05', name:'王五',   dept:'财务部',     role:'会计',       station:'B-202', status:'away',    avatarColor:AVATAR_COLORS[4],  birthday:'11-20', isManager:false, isDeptHead:false },
+  { id:'e06', name:'陈智威', dept:'人力行政部', role:'HR总监',     station:'C-101', status:'online',  avatarColor:AVATAR_COLORS[5],  birthday:'07-15', isManager:true,  isDeptHead:true,  isAssetAdmin:true },
+  { id:'e07', name:'秦六',   dept:'人力行政部', role:'行政专员',   station:'C-102', status:'online',  avatarColor:AVATAR_COLORS[6],  birthday:'12-01', isManager:false, isDeptHead:false },
+  { id:'e08', name:'孙七',   dept:'客服部',     role:'客服主管',   station:'D-401', status:'remote',  avatarColor:AVATAR_COLORS[7],  birthday:'05-06', isManager:false, isDeptHead:true },
+  { id:'e09', name:'周八',   dept:'客服部',     role:'客服专员',   station:'D-402', status:'online',  avatarColor:AVATAR_COLORS[8],  birthday:'08-18', isManager:false, isDeptHead:false },
+  { id:'e10', name:'吴十',   dept:'信审部',     role:'审核主管',   station:'E-501', status:'biztrip', avatarColor:AVATAR_COLORS[9],  birthday:'01-30', isManager:false, isDeptHead:true },
+  { id:'e11', name:'郑十一', dept:'信审部',     role:'审核专员',   station:'E-502', status:'online',  avatarColor:AVATAR_COLORS[10], birthday:'10-05', isManager:false, isDeptHead:false },
+  { id:'e12', name:'冯十二', dept:'运维部',     role:'运维主管',   station:'F-601', status:'online',  avatarColor:AVATAR_COLORS[11], birthday:'04-22', isManager:false, isDeptHead:true },
+  { id:'e13', name:'马十三', dept:'运维部',     role:'运维工程师', station:'F-602', status:'vacation',avatarColor:AVATAR_COLORS[12], birthday:'09-28', isManager:false, isDeptHead:false },
 ];
 
-// 年度任务数据
+// 运行时资产数据（可编辑）
+let runtimeAssets = [
+  { assetId:'a01', empId:'e01', type:'台式电脑', code:'WDPH-GDZC-2024-001', date:'2024-03-15', assetStatus:'在用' },
+  { assetId:'a02', empId:'e01', type:'显示器',   code:'WDPH-GDZC-2024-002', date:'2024-03-15', assetStatus:'在用' },
+  { assetId:'a03', empId:'e02', type:'笔记本',   code:'WDPH-GDZC-2024-003', date:'2024-04-01', assetStatus:'在用' },
+  { assetId:'a04', empId:'e03', type:'台式电脑', code:'WDPH-GDZC-2024-004', date:'2024-05-20', assetStatus:'在用' },
+  { assetId:'a05', empId:'e04', type:'笔记本',   code:'WDPH-GDZC-2024-005', date:'2024-01-10', assetStatus:'在用' },
+  { assetId:'a06', empId:'e04', type:'键鼠外设', code:'WDPH-GDZC-2024-006', date:'2024-01-10', assetStatus:'在用' },
+  { assetId:'a07', empId:'e05', type:'台式电脑', code:'WDPH-GDZC-2024-007', date:'2024-06-01', assetStatus:'在用' },
+  { assetId:'a08', empId:'e06', type:'笔记本',   code:'WDPH-GDZC-2024-008', date:'2024-02-01', assetStatus:'在用' },
+  { assetId:'a09', empId:'e06', type:'显示器',   code:'WDPH-GDZC-2024-009', date:'2024-02-01', assetStatus:'在用' },
+  { assetId:'a10', empId:'e07', type:'台式电脑', code:'WDPH-GDZC-2024-010', date:'2024-07-10', assetStatus:'在用' },
+  { assetId:'a11', empId:'e08', type:'笔记本',   code:'WDPH-GDZC-2024-011', date:'2024-02-20', assetStatus:'在用' },
+  { assetId:'a12', empId:'e09', type:'台式电脑', code:'WDPH-GDZC-2024-012', date:'2024-03-05', assetStatus:'维修中' },
+  { assetId:'a13', empId:'e10', type:'笔记本',   code:'WDPH-GDZC-2024-013', date:'2024-04-15', assetStatus:'在用' },
+  { assetId:'a14', empId:'e11', type:'台式电脑', code:'WDPH-GDZC-2024-014', date:'2024-05-01', assetStatus:'在用' },
+  { assetId:'a15', empId:'e12', type:'台式电脑', code:'WDPH-GDZC-2024-015', date:'2024-01-20', assetStatus:'在用' },
+  { assetId:'a16', empId:'e12', type:'键鼠外设', code:'WDPH-GDZC-2024-016', date:'2024-01-20', assetStatus:'闲置' },
+  { assetId:'a17', empId:'e13', type:'笔记本',   code:'WDPH-GDZC-2024-017', date:'2024-06-10', assetStatus:'在用' },
+];
+
+let nextAssetSeq = 18;
+
+function getEmpAssets(empId) {
+  return runtimeAssets.filter(a => a.empId === empId);
+}
+
+function getAllAssets() {
+  return [...runtimeAssets];
+}
+
+function getEmpName(empId) {
+  const e = EMPLOYEES.find(x => x.id === empId);
+  return e ? `${e.name}（${e.dept}）` : '未分配';
+}
+
+// 年度任务
 const TASKS = {
   e01: [{name:'风控体系搭建', progress:75, deadline:'2026-12-31', type:'年度重点'},{name:'监管合规审查', progress:60, deadline:'2026-09-30', type:'年度重点'}],
   e02: [{name:'风险模型优化', progress:40, deadline:'2026-11-30', type:'年度重点'}],
@@ -404,39 +382,37 @@ const TASKS = {
   e13: [{name:'监控体系搭建', progress:40, deadline:'2026-11-30', type:'年度重点'}],
 };
 
-// 跨人员项目
 const PROJECTS = [
   { id:'p1', name:'数字化转型项目', members:['e01','e04','e06','e12'], progress:45, deadline:'2026-12-31', milestones:[{name:'需求调研',done:true},{name:'方案设计',done:true},{name:'系统开发',done:false},{name:'上线验收',done:false}] },
   { id:'p2', name:'合规审计专项',   members:['e01','e03','e10','e11'], progress:65, deadline:'2026-09-30', milestones:[{name:'自查阶段',done:true},{name:'整改阶段',done:false},{name:'复审阶段',done:false}] },
 ];
 
-// ========== 状态管理 ==========
-let currentViewUser = null; // 当前查看视角的员工
-let employeeStates = {};   // 员工当前状态快照
+// ========== 状态 ==========
+let currentViewUser = null;
+let employeeStates = {};
+EMPLOYEES.forEach(e => { employeeStates[e.id] = e.status; });
 
-// 初始化状态
-EMPLOYEES.forEach(e => {
-  employeeStates[e.id] = e.status;
-});
-
-// ========== 权限判断 ==========
+// ========== 权限 ==========
+function isAssetAdmin() {
+  return currentViewUser && (currentViewUser.isAssetAdmin || (currentViewUser.dept === '人力行政部' && currentViewUser.isDeptHead));
+}
 function canViewStats() {
   if (!currentViewUser) return false;
-  return currentViewUser.isManager || currentViewUser.id === 'e06'; // 管理层+人力行政部总监
+  return currentViewUser.isManager || currentViewUser.id === 'e06';
 }
 function canEditStatus(targetEmpId) {
   if (!currentViewUser) return false;
-  if (currentViewUser.isManager) return true; // 管理层可修正全员
-  if (currentViewUser.dept === '人力行政部') return true; // 人力行政部可修正全员
+  if (currentViewUser.isManager) return true;
+  if (currentViewUser.dept === '人力行政部') return true;
   const target = EMPLOYEES.find(e => e.id === targetEmpId);
   if (!target) return false;
-  if (currentViewUser.isDeptHead && currentViewUser.dept === target.dept) return true; // 部门负责人可修正本部门
+  if (currentViewUser.isDeptHead && currentViewUser.dept === target.dept) return true;
   return false;
 }
 function canViewAssets(targetEmpId) {
   if (!currentViewUser) return false;
-  if (currentViewUser.isAssetAdmin || (currentViewUser.dept === '人力行政部' && currentViewUser.isDeptHead)) return true; // 资产管理员
-  return currentViewUser.id === targetEmpId; // 仅可看自己
+  if (isAssetAdmin()) return true;
+  return currentViewUser.id === targetEmpId;
 }
 function canViewTasks(targetEmpId) {
   if (!currentViewUser) return false;
@@ -463,10 +439,11 @@ function showToast(msg) {
   setTimeout(() => el.remove(), 2500);
 }
 
-// ========== 渲染 ==========
+// ========== 渲染总入口 ==========
 function renderApp() {
   renderRoleSwitcher();
   renderStatsBar();
+  renderAssetCenter();
   renderMainContent();
   updateUserBar();
 }
@@ -488,7 +465,7 @@ function renderRoleSwitcher() {
   const container = document.getElementById('roleSwitcher');
   const roles = [
     { label:'赵一(管理层)', user:EMPLOYEES[0] },
-    { label:'陈智威(HR)',   user:EMPLOYEES[5] },
+    { label:'陈智威(HR+资产)', user:EMPLOYEES[5] },
     { label:'李四(负责人)', user:EMPLOYEES[3] },
     { label:'钱二(员工)',   user:EMPLOYEES[1] },
   ];
@@ -502,6 +479,7 @@ function switchView(empId) {
   renderApp();
 }
 
+// ========== 统计栏 ==========
 function renderStatsBar() {
   const bar = document.getElementById('statsBar');
   if (!canViewStats()) {
@@ -510,21 +488,18 @@ function renderStatsBar() {
   }
   const total = EMPLOYEES.length;
   const onlineCount = EMPLOYEES.filter(e => employeeStates[e.id] === 'online').length;
-  const deptCount = DEPARTMENTS.length;
   const deptRates = DEPARTMENTS.map(d => {
     const members = EMPLOYEES.filter(e => e.dept === d);
     const online = members.filter(e => employeeStates[e.id] === 'online').length;
     return { dept:d, rate:Math.round(online/members.length*100) };
   });
+  const avgRate = Math.round(deptRates.reduce((s,r) => s+r.rate, 0) / deptRates.length);
   const todayOff = EMPLOYEES.filter(e => ['out','biztrip','vacation'].includes(employeeStates[e.id])).length;
   const birthdayCount = EMPLOYEES.filter(isTodayBirthday).length;
   const overdueTasks = Object.values(TASKS).flat().filter(t => {
     if (t.progress >= 100) return false;
-    const dl = new Date(t.deadline);
-    return dl < new Date();
+    return new Date(t.deadline) < new Date();
   }).length;
-
-  const avgRate = Math.round(deptRates.reduce((s,r) => s+r.rate, 0) / deptRates.length);
 
   bar.innerHTML = `
     <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-value">${onlineCount}/${total}</div><div class="stat-label">全公司在岗人数</div></div></div>
@@ -534,6 +509,211 @@ function renderStatsBar() {
     <div class="stat-card"><div class="stat-icon red">⚠️</div><div><div class="stat-value">${overdueTasks}</div><div class="stat-label">逾期任务数量</div></div></div>`;
 }
 
+// ========== 资产管理中心 ==========
+function renderAssetCenter() {
+  const container = document.getElementById('assetCenterContainer');
+  if (!isAssetAdmin()) { container.innerHTML = ''; return; }
+
+  const allAssets = getAllAssets();
+  const filterDept = DEPARTMENTS.map(d => `<option value="${d}">${d}</option>`).join('');
+  const filterType = ASSET_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+  const filterStatus = ASSET_STATUSES.map(s => `<option value="${s}">${s}</option>`).join('');
+
+  let rows = allAssets.map(a => {
+    const emp = EMPLOYEES.find(e => e.id === a.empId);
+    const empName = emp ? emp.name : '未分配';
+    const empDept = emp ? emp.dept : '-';
+    const stCls = a.assetStatus === '在用' ? 'active' : a.assetStatus === '维修中' ? 'repair' : a.assetStatus === '闲置' ? 'idle' : 'scrap';
+    return `<tr data-type="${a.type}" data-dept="${empDept}" data-status="${a.assetStatus}">
+      <td>${empName}</td><td>${empDept}</td><td>${a.type}</td><td>${a.code}</td><td>${a.date}</td>
+      <td><span class="status-tag ${stCls}">${a.assetStatus}</span></td>
+      <td>
+        <button class="btn btn-sm" onclick="openAssetEdit('${a.assetId}')">编辑</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteAsset('${a.assetId}')">删除</button>
+      </td></tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="asset-center">
+      <div class="asset-center-header">
+        <h3>📋 资产管理中心 — 全公司固定资产台账（${allAssets.length}项）</h3>
+        <div class="asset-center-actions">
+          <button class="btn btn-primary" onclick="openAssetAdd()">＋ 新增资产</button>
+          <button class="btn" onclick="exportAssetCSV()">📥 导出CSV</button>
+        </div>
+      </div>
+      <div class="asset-filter-row">
+        <select onchange="filterAssetTable()" id="assetFilterDept">
+          <option value="">全部部门</option>${filterDept}
+        </select>
+        <select onchange="filterAssetTable()" id="assetFilterType">
+          <option value="">全部类型</option>${filterType}
+        </select>
+        <select onchange="filterAssetTable()" id="assetFilterStatus">
+          <option value="">全部状态</option>${filterStatus}
+        </select>
+      </div>
+      <div class="asset-table-wrap">
+        <table class="asset-full-table">
+          <thead><tr><th>使用人</th><th>部门</th><th>资产类型</th><th>资产编号</th><th>领用日期</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody id="assetTableBody">${rows || '<tr><td colspan="7" class="empty-state">暂无资产记录</td></tr>'}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function filterAssetTable() {
+  const dept = document.getElementById('assetFilterDept').value;
+  const type = document.getElementById('assetFilterType').value;
+  const status = document.getElementById('assetFilterStatus').value;
+  const rows = document.querySelectorAll('#assetTableBody tr');
+  rows.forEach(row => {
+    const rd = row.dataset.dept || '';
+    const rt = row.dataset.type || '';
+    const rs = row.dataset.status || '';
+    const match = (!dept || rd === dept) && (!type || rt === type) && (!status || rs === status);
+    row.style.display = match ? '' : 'none';
+  });
+}
+
+// ========== 资产 CRUD ==========
+function openAssetAdd() {
+  const empOptions = EMPLOYEES.map(e => `<option value="${e.id}">${e.name}（${e.dept}）</option>`).join('');
+  const typeOptions = ASSET_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+  const year = new Date().getFullYear();
+  const seq = String(nextAssetSeq).padStart(3,'0');
+  const defaultCode = `WDPH-GDZC-${year}-${seq}`;
+
+  const html = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h3>新增固定资产</h3>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group"><label>使用人</label><select id="assetAddEmp">${empOptions}</select></div>
+          <div class="form-group"><label>资产类型</label><select id="assetAddType">${typeOptions}</select></div>
+          <div class="form-group"><label>资产编号</label><input id="assetAddCode" value="${defaultCode}"></div>
+          <div class="form-group"><label>领用日期</label><input id="assetAddDate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+          <div class="form-group"><label>资产状态</label>
+            <select id="assetAddStatus">${ASSET_STATUSES.map(s => `<option value="${s}" ${s==='在用'?'selected':''}>${s}</option>`).join('')}</select>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="closeModal()">取消</button>
+            <button class="btn btn-primary" onclick="doAddAsset()">确认新增</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('overlayContainer').innerHTML = html;
+}
+
+function doAddAsset() {
+  const empId = document.getElementById('assetAddEmp').value;
+  const type = document.getElementById('assetAddType').value;
+  const code = document.getElementById('assetAddCode').value.trim();
+  const date = document.getElementById('assetAddDate').value;
+  const assetStatus = document.getElementById('assetAddStatus').value;
+
+  if (!code) { showToast('请输入资产编号'); return; }
+  if (runtimeAssets.some(a => a.code === code)) { showToast('资产编号已存在'); return; }
+
+  runtimeAssets.push({ assetId:'a'+(nextAssetSeq++), empId, type, code, date, assetStatus });
+  closeModal();
+  showToast('资产新增成功');
+  renderAssetCenter();
+}
+
+function openAssetEdit(assetId) {
+  const asset = runtimeAssets.find(a => a.assetId === assetId);
+  if (!asset) return;
+
+  const empOptions = EMPLOYEES.map(e => `<option value="${e.id}" ${e.id===asset.empId?'selected':''}>${e.name}（${e.dept}）</option>`).join('');
+  const typeOptions = ASSET_TYPES.map(t => `<option value="${t}" ${t===asset.type?'selected':''}>${t}</option>`).join('');
+
+  const html = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h3>编辑资产 — ${asset.code}</h3>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group"><label>使用人</label><select id="assetEditEmp">${empOptions}</select></div>
+          <div class="form-group"><label>资产类型</label><select id="assetEditType">${typeOptions}</select></div>
+          <div class="form-group"><label>资产编号</label><input id="assetEditCode" value="${asset.code}"></div>
+          <div class="form-group"><label>领用日期</label><input id="assetEditDate" type="date" value="${asset.date}"></div>
+          <div class="form-group"><label>资产状态</label>
+            <select id="assetEditStatus">${ASSET_STATUSES.map(s => `<option value="${s}" ${s===asset.assetStatus?'selected':''}>${s}</option>`).join('')}</select>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="closeModal()">取消</button>
+            <button class="btn btn-primary" onclick="doEditAsset('${assetId}')">保存修改</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('overlayContainer').innerHTML = html;
+}
+
+function doEditAsset(assetId) {
+  const asset = runtimeAssets.find(a => a.assetId === assetId);
+  if (!asset) return;
+
+  const newEmpId = document.getElementById('assetEditEmp').value;
+  const newType = document.getElementById('assetEditType').value;
+  const newCode = document.getElementById('assetEditCode').value.trim();
+  const newDate = document.getElementById('assetEditDate').value;
+  const newStatus = document.getElementById('assetEditStatus').value;
+
+  if (!newCode) { showToast('请输入资产编号'); return; }
+  const dup = runtimeAssets.find(a => a.code === newCode && a.assetId !== assetId);
+  if (dup) { showToast('资产编号已存在'); return; }
+
+  asset.empId = newEmpId;
+  asset.type = newType;
+  asset.code = newCode;
+  asset.date = newDate;
+  asset.assetStatus = newStatus;
+
+  closeModal();
+  showToast('资产信息已更新');
+  renderAssetCenter();
+}
+
+function deleteAsset(assetId) {
+  const asset = runtimeAssets.find(a => a.assetId === assetId);
+  if (!asset) return;
+  if (!confirm(`确定要删除资产 "${asset.code}"（${asset.type}）吗？此操作不可恢复。`)) return;
+  runtimeAssets = runtimeAssets.filter(a => a.assetId !== assetId);
+  showToast('资产已删除');
+  renderAssetCenter();
+}
+
+function exportAssetCSV() {
+  const allAssets = getAllAssets();
+  const header = '使用人,部门,资产类型,资产编号,领用日期,资产状态';
+  const rows = allAssets.map(a => {
+    const emp = EMPLOYEES.find(e => e.id === a.empId);
+    return [emp?emp.name:'未分配', emp?emp.dept:'-', a.type, a.code, a.date, a.assetStatus].join(',');
+  });
+  const csv = '\uFEFF' + [header, ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `固定资产台账_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('资产台账已导出为CSV');
+}
+
+function closeModal() {
+  document.getElementById('overlayContainer').innerHTML = '';
+}
+
+// ========== 主体看板 ==========
 function renderMainContent() {
   const container = document.getElementById('mainContent');
   container.innerHTML = DEPARTMENTS.map(dept => {
@@ -580,6 +760,7 @@ function renderEmployeeCard(emp) {
     </div>`;
 }
 
+// ========== 员工详情 ==========
 function openDetail(empId) {
   const emp = EMPLOYEES.find(e => e.id === empId);
   if (!emp) return;
@@ -587,10 +768,9 @@ function openDetail(empId) {
   const birthday = isTodayBirthday(emp);
   const isApprovalLocked = status.type === 'approval';
 
-  // 状态选择按钮
+  // 状态部分
   let statusHtml = '';
   if (canEditStatus(empId) || currentViewUser.id === empId) {
-    // 有权限修改（本人或上级/HR）
     const manualStatuses = Object.entries(STATUS_MAP).filter(([k,v]) => v.type === 'manual');
     const approvalStatuses = Object.entries(STATUS_MAP).filter(([k,v]) => v.type === 'approval');
 
@@ -603,15 +783,13 @@ function openDetail(empId) {
     }).join('');
     statusHtml += '</div>';
 
-    if (approvalStatuses.length > 0) {
-      statusHtml += '<div style="margin:12px 0 8px;font-size:11px;color:var(--text-muted)">审批驱动状态（需飞书审批，当前为演示模式）：</div>';
-      statusHtml += '<div class="status-selector">';
-      statusHtml += approvalStatuses.map(([k,v]) => {
-        const active = employeeStates[emp.id] === k ? ' active' : '';
-        return `<span class="status-option${active}" onclick="changeStatus('${emp.id}','${k}')">${v.label}</span>`;
-      }).join('');
-      statusHtml += '</div>';
-    }
+    statusHtml += '<div style="margin:12px 0 8px;font-size:11px;color:var(--text-muted)">审批驱动状态（需飞书审批）：</div>';
+    statusHtml += '<div class="status-selector">';
+    statusHtml += approvalStatuses.map(([k,v]) => {
+      const active = employeeStates[emp.id] === k ? ' active' : '';
+      return `<span class="status-option${active}" onclick="changeStatus('${emp.id}','${k}')">${v.label}</span>`;
+    }).join('');
+    statusHtml += '</div>';
     if (isApprovalLocked && currentViewUser.id === empId && !canEditStatus(empId)) {
       statusHtml += '<div style="font-size:11px;color:var(--orange);margin-top:8px">⚠ 当前为审批驱动状态，审批到期后自动恢复在岗</div>';
     }
@@ -623,55 +801,56 @@ function openDetail(empId) {
 
   // 资产部分
   let assetHtml = '';
-  if (canViewAssets(empId) && emp.assets && emp.assets.length > 0) {
-    assetHtml = `
-      <div class="panel-section">
-        <h5>固定资产 (${emp.assets.length}项)</h5>
-        <table class="asset-table">
-          <tr><th>资产类型</th><th>资产编号</th><th>领用日期</th><th>状态</th></tr>
-          ${emp.assets.map(a => `<tr>
-            <td>${a.type}</td><td>${a.code}</td><td>${a.date}</td>
-            <td><span style="color:${a.assetStatus==='在用'?'var(--green)':a.assetStatus==='维修中'?'var(--orange)':'var(--text-muted)'}">${a.assetStatus}</span></td>
-          </tr>`).join('')}
-        </table>
-      </div>`;
-  } else if (canViewAssets(empId)) {
-    assetHtml = '<div class="panel-section"><h5>固定资产</h5><div style="color:var(--text-muted);font-size:13px">暂无资产记录</div></div>';
+  if (canViewAssets(empId)) {
+    const assets = getEmpAssets(empId);
+    if (assets.length > 0) {
+      assetHtml = `
+        <div class="panel-section">
+          <h5>固定资产 (${assets.length}项)${isAssetAdmin()?'<button class="btn btn-sm btn-primary" style="margin-left:8px" onclick="quickAddAsset(\''+empId+'\')">＋ 新增</button>':''}</h5>
+          <table class="asset-table">
+            <tr><th>资产类型</th><th>资产编号</th><th>领用日期</th><th>状态</th>${isAssetAdmin()?'<th>操作</th>':''}</tr>
+            ${assets.map(a => `<tr>
+              <td>${a.type}</td><td>${a.code}</td><td>${a.date}</td>
+              <td><span style="color:${a.assetStatus==='在用'?'var(--green)':a.assetStatus==='维修中'?'var(--orange)':a.assetStatus==='闲置'?'var(--gray)':'var(--red)'}">${a.assetStatus}</span></td>
+              ${isAssetAdmin() ? `<td>
+                <button class="btn btn-sm" onclick="openAssetEdit('${a.assetId}')">编辑</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteAsset('${a.assetId}')">删除</button>
+              </td>` : ''}
+            </tr>`).join('')}
+          </table>
+        </div>`;
+    } else {
+      assetHtml = `
+        <div class="panel-section">
+          <h5>固定资产${isAssetAdmin()?'<button class="btn btn-sm btn-primary" style="margin-left:8px" onclick="quickAddAsset(\''+empId+'\')">＋ 新增</button>':''}</h5>
+          <div style="color:var(--text-muted);font-size:13px">暂无资产记录</div>
+        </div>`;
+    }
   }
 
   // 任务部分
   let taskHtml = '';
   if (canViewTasks(empId)) {
     const myTasks = TASKS[empId] || [];
-    // 跨人员项目
     const myProjects = PROJECTS.filter(p => p.members.includes(empId));
-
     if (myTasks.length > 0 || myProjects.length > 0) {
       taskHtml = '<div class="panel-section"><h5>年度重点任务与项目</h5>';
       myTasks.forEach(t => {
         const isOverdue = new Date(t.deadline) < new Date() && t.progress < 100;
         const pColor = t.progress >= 80 ? 'green' : t.progress >= 40 ? 'orange' : 'red';
-        taskHtml += `
-          <div class="task-item" style="border-left-color:${isOverdue?'var(--red)':'var(--accent)'}">
-            <div class="task-name">${t.name} ${isOverdue?'<span style="color:var(--red);font-size:11px">逾期</span>':''}</div>
-            <div class="task-meta"><span>类型: ${t.type}</span><span>截止: ${t.deadline}</span></div>
-            <div class="progress-bar"><div class="progress-fill ${pColor}" style="width:${t.progress}%"></div></div>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">进度 ${t.progress}%</div>
-          </div>`;
+        taskHtml += `<div class="task-item" style="border-left-color:${isOverdue?'var(--red)':'var(--accent)'}">
+          <div class="task-name">${t.name} ${isOverdue?'<span style="color:var(--red);font-size:11px">逾期</span>':''}</div>
+          <div class="task-meta"><span>类型: ${t.type}</span><span>截止: ${t.deadline}</span></div>
+          <div class="progress-bar"><div class="progress-fill ${pColor}" style="width:${t.progress}%"></div></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">进度 ${t.progress}%</div></div>`;
       });
       myProjects.forEach(p => {
-        taskHtml += `
-          <div class="task-item" style="border-left-color:var(--purple);margin-top:4px">
-            <div class="task-name">📁 项目: ${p.name}</div>
-            <div class="task-meta"><span>进度: ${p.progress}%</span><span>截止: ${p.deadline}</span></div>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">
-              里程碑: ${p.milestones.map(m => `${m.done?'✅':'⏳'}${m.name}`).join(' · ')}
-            </div>
-          </div>`;
+        taskHtml += `<div class="task-item" style="border-left-color:var(--purple);margin-top:4px">
+          <div class="task-name">📁 项目: ${p.name}</div>
+          <div class="task-meta"><span>进度: ${p.progress}%</span><span>截止: ${p.deadline}</span></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">里程碑: ${p.milestones.map(m => `${m.done?'✅':'⏳'}${m.name}`).join(' · ')}</div></div>`;
       });
       taskHtml += '</div>';
-    } else {
-      taskHtml = '<div class="panel-section"><h5>年度重点任务与项目</h5><div style="color:var(--text-muted);font-size:13px">暂无任务数据</div></div>';
     }
   }
 
@@ -693,18 +872,50 @@ function openDetail(empId) {
               <div class="sub">${emp.dept} · ${emp.role} · 工位 ${emp.station}</div>
             </div>
           </div>
-
-          <div class="panel-section">
-            <h5>在岗状态</h5>
-            ${statusHtml}
-          </div>
-
+          <div class="panel-section"><h5>在岗状态</h5>${statusHtml}</div>
           ${assetHtml}
           ${taskHtml}
         </div>
       </div>
     </div>`;
+  document.getElementById('overlayContainer').innerHTML = html;
+}
 
+function quickAddAsset(empId) {
+  closeDetail();
+  setTimeout(() => openAssetAddPreset(empId), 150);
+}
+
+function openAssetAddPreset(empId) {
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  const empOptions = EMPLOYEES.map(e => `<option value="${e.id}" ${e.id===empId?'selected':''}>${e.name}（${e.dept}）</option>`).join('');
+  const typeOptions = ASSET_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+  const year = new Date().getFullYear();
+  const seq = String(nextAssetSeq).padStart(3,'0');
+  const defaultCode = `WDPH-GDZC-${year}-${seq}`;
+
+  const html = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h3>新增资产 — ${emp.name}</h3>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group"><label>使用人</label><select id="assetAddEmp">${empOptions}</select></div>
+          <div class="form-group"><label>资产类型</label><select id="assetAddType">${typeOptions}</select></div>
+          <div class="form-group"><label>资产编号</label><input id="assetAddCode" value="${defaultCode}"></div>
+          <div class="form-group"><label>领用日期</label><input id="assetAddDate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+          <div class="form-group"><label>资产状态</label>
+            <select id="assetAddStatus">${ASSET_STATUSES.map(s => `<option value="${s}" ${s==='在用'?'selected':''}>${s}</option>`).join('')}</select>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="closeModal()">取消</button>
+            <button class="btn btn-primary" onclick="doAddAsset()">确认新增</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
   document.getElementById('overlayContainer').innerHTML = html;
 }
 
@@ -717,22 +928,18 @@ function changeStatus(empId, newStatus) {
   const oldStatus = STATUS_MAP[employeeStates[empId]];
   const newStatusObj = STATUS_MAP[newStatus];
 
-  // 审批驱动状态不可以在非授权情况修改
   if (oldStatus && oldStatus.type === 'approval' && currentViewUser.id === empId && !canEditStatus(empId)) {
     showToast('审批驱动状态下不可手动修改，请等待审批到期');
     return;
   }
 
-  // 切换到审批驱动状态（演示模式下允许）
   employeeStates[empId] = newStatus;
   showToast(`${emp.name} 状态已更新为「${newStatusObj.label}」`);
   renderApp();
-  // 刷新详情面板
   openDetail(empId);
 }
 
 // ========== 初始化 ==========
-// 默认以管理层视角（赵一）查看
 currentViewUser = EMPLOYEES[0];
 renderApp();
 </script>
