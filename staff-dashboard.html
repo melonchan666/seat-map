@@ -311,7 +311,7 @@ const STATUS_MAP = {
 const ASSET_TYPES = ['台式电脑','显示器','笔记本','键鼠外设','打印机','扫描仪','其他'];
 const ASSET_STATUSES = ['在用','维修中','闲置','已报废'];
 
-const DEPARTMENTS = ['风险管理部','财务部','人力行政部','客服部','信审部','运维部'];
+const DEPARTMENTS = [...new Set(EMPLOYEES.map(e => e.dept))];
 
 // ========== 员工数据（从飞书API动态加载） ==========
 let EMPLOYEES = [];
@@ -486,12 +486,10 @@ function updateUserBar() {
 
 function renderRoleSwitcher() {
   const container = document.getElementById('roleSwitcher');
-  const roles = [
-    { label:'赵一(管理层)', user:EMPLOYEES[0] },
-    { label:'陈智威(HR+资产)', user:EMPLOYEES[5] },
-    { label:'李四(负责人)', user:EMPLOYEES[3] },
-    { label:'钱二(员工)',   user:EMPLOYEES[1] },
-  ];
+  const roles = EMPLOYEES.map(e => ({
+    label: `${e.name}（${e.dept}）`,
+    user: e
+  }));
   container.innerHTML = roles.map(r =>
     `<button class="role-btn${currentViewUser&&currentViewUser.id===r.user.id?' active':''}" onclick="switchView('${r.user.id}')">${r.label}</button>`
   ).join('');
