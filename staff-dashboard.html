@@ -321,7 +321,10 @@ let employeeDataLoaded = false;
 async function fetchEmployees() {
   try {
     showLoading('正在加载员工数据...');
-    const resp = await fetch('https://newfeishuapi.18819444992.workers.dev/api/employees');
+    const ctrl = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), 10000);
+    const resp = await fetch('https://newfeishuapi.18819444992.workers.dev/api/employees', { signal: ctrl.signal });
+    clearTimeout(timeout);
     const json = await resp.json();
     if (json.code === 0 && json.data) {
       EMPLOYEES = json.data.map((item, index) => ({
@@ -341,7 +344,9 @@ async function fetchEmployees() {
     }
     employeeDataLoaded = true;
   } catch (e) {
-    console.error('员工数据加载失败:', e);
+    employeeDataLoaded = false;
+    const msg = e.name === 'AbortError' ? '加载超时，请检查网络后刷新重试' : ('加载失败: ' + (e.message || '网络异常'));
+    showLoading(msg);
   }
 }
 
