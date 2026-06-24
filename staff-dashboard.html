@@ -313,21 +313,44 @@ const ASSET_STATUSES = ['在用','维修中','闲置','已报废'];
 
 const DEPARTMENTS = ['风险管理部','财务部','人力行政部','客服部','信审部','运维部'];
 
-const EMPLOYEES = [
-  { id:'e01', name:'赵一',   dept:'风险管理部', role:'部门总监',   station:'A-301', status:'online',  avatarColor:AVATAR_COLORS[0],  birthday:'02-15', isManager:true,  isDeptHead:true },
-  { id:'e02', name:'钱二',   dept:'风险管理部', role:'风控专员',   station:'A-302', status:'online',  avatarColor:AVATAR_COLORS[1],  birthday:'06-24', isManager:false, isDeptHead:false },
-  { id:'e03', name:'张三',   dept:'风险管理部', role:'合规专员',   station:'A-303', status:'meeting', avatarColor:AVATAR_COLORS[2],  birthday:'09-10', isManager:false, isDeptHead:false },
-  { id:'e04', name:'李四',   dept:'财务部',     role:'财务主管',   station:'B-201', status:'online',  avatarColor:AVATAR_COLORS[3],  birthday:'03-08', isManager:false, isDeptHead:true },
-  { id:'e05', name:'王五',   dept:'财务部',     role:'会计',       station:'B-202', status:'away',    avatarColor:AVATAR_COLORS[4],  birthday:'11-20', isManager:false, isDeptHead:false },
-  { id:'e06', name:'陈智威', dept:'人力行政部', role:'HR总监',     station:'C-101', status:'online',  avatarColor:AVATAR_COLORS[5],  birthday:'07-15', isManager:true,  isDeptHead:true,  isAssetAdmin:true },
-  { id:'e07', name:'秦六',   dept:'人力行政部', role:'行政专员',   station:'C-102', status:'online',  avatarColor:AVATAR_COLORS[6],  birthday:'12-01', isManager:false, isDeptHead:false },
-  { id:'e08', name:'孙七',   dept:'客服部',     role:'客服主管',   station:'D-401', status:'remote',  avatarColor:AVATAR_COLORS[7],  birthday:'05-06', isManager:false, isDeptHead:true },
-  { id:'e09', name:'周八',   dept:'客服部',     role:'客服专员',   station:'D-402', status:'online',  avatarColor:AVATAR_COLORS[8],  birthday:'08-18', isManager:false, isDeptHead:false },
-  { id:'e10', name:'吴十',   dept:'信审部',     role:'审核主管',   station:'E-501', status:'biztrip', avatarColor:AVATAR_COLORS[9],  birthday:'01-30', isManager:false, isDeptHead:true },
-  { id:'e11', name:'郑十一', dept:'信审部',     role:'审核专员',   station:'E-502', status:'online',  avatarColor:AVATAR_COLORS[10], birthday:'10-05', isManager:false, isDeptHead:false },
-  { id:'e12', name:'冯十二', dept:'运维部',     role:'运维主管',   station:'F-601', status:'online',  avatarColor:AVATAR_COLORS[11], birthday:'04-22', isManager:false, isDeptHead:true },
-  { id:'e13', name:'马十三', dept:'运维部',     role:'运维工程师', station:'F-602', status:'vacation',avatarColor:AVATAR_COLORS[12], birthday:'09-28', isManager:false, isDeptHead:false },
-];
+// ========== 员工数据（从飞书API动态加载） ==========
+let EMPLOYEES = [];
+let employeeDataLoaded = false;
+
+async function fetchEmployees() {
+  try {
+    showLoading('正在加载员工数据...');
+    const resp = await fetch('https://newfeishuapi.18819444992.workers.dev/api/employees');
+    const json = await resp.json();
+    if (json.code === 0 && json.data) {
+      EMPLOYEES = json.data.map((item, index) => ({
+        id: item.id || 'api_' + index,
+        name: item.name || '未知',
+        dept: item.dept || '未分配部门',
+        role: item.role || '员工',
+        station: '-',
+        status: 'online',
+        avatarColor: AVATAR_COLORS[index % AVATAR_COLORS.length],
+        birthday: '',
+        isManager: false,
+        isDeptHead: false,
+        avatar: item.avatar || ''
+      }));
+    }
+    employeeDataLoaded = true;
+  } catch (e) {
+    console.error('员工数据加载失败:', e);
+  }
+}
+
+function showLoading(msg) {
+  const main = document.getElementById('mainContent');
+  if (main) {
+    main.innerHTML = '<div style="text-align:center;padding:80px 0;color:var(--text-muted);font-size:14px;">'
+      + '<div style="margin-bottom:10px;font-size:24px;">&#9203;</div>' + msg + '</div>';
+  }
+}
+
 
 // 运行时资产数据（可编辑）
 let runtimeAssets = [
@@ -940,8 +963,17 @@ function changeStatus(empId, newStatus) {
 }
 
 // ========== 初始化 ==========
-currentViewUser = EMPLOYEES[0];
-renderApp();
+async function initApp() {
+  await fetchEmployees();
+
+  if (EMPLOYEES.length > 0) {
+    EMPLOYEES.forEach(e => { employeeStates[e.id] = e.status; });
+    currentViewUser = EMPLOYEES[0];
+    renderApp();
+  }
+}
+
+initApp();
 </script>
 </body>
 </html>
