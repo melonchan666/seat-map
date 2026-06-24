@@ -311,10 +311,11 @@ const STATUS_MAP = {
 const ASSET_TYPES = ['台式电脑','显示器','笔记本','键鼠外设','打印机','扫描仪','其他'];
 const ASSET_STATUSES = ['在用','维修中','闲置','已报废'];
 
-const DEPARTMENTS = [...new Set(EMPLOYEES.map(e => e.dept))];
+
 
 // ========== 员工数据（从飞书API动态加载） ==========
 let EMPLOYEES = [];
+let DEPARTMENTS = [];
 let employeeDataLoaded = false;
 
 async function fetchEmployees() {
@@ -336,6 +337,7 @@ async function fetchEmployees() {
         isDeptHead: false,
         avatar: item.avatar || ''
       }));
+      DEPARTMENTS = [...new Set(EMPLOYEES.map(e => e.dept))];
     }
     employeeDataLoaded = true;
   } catch (e) {
